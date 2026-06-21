@@ -1,40 +1,84 @@
-/* Cibercore - Estilos Personalizados */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* Desplazamiento Suave */
+body {
+	font-family: 'Outfit', sans-serif;
+	color: #333333;
+	background-color: #f8f9fa;
+	line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Outfit', sans-serif;
+	font-weight: 700;
+}
+
 html {
 	scroll-behavior: smooth;
 }
 
-/* Variables de la Paleta de Colores */
 :root {
 	--azul-principal: #0000FF;
 	--blanco: #FFFFFF;
 	--amarillo: #DAE021;
+	--oscuro-suave: #212529;
+	--gris-borde: #dee2e6;
+	
+	--sombra-tarjeta: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	--sombra-tarjeta-hover: 0 10px 15px -3px rgba(0, 0, 255, 0.15), 0 4px 6px -2px rgba(0, 0, 255, 0.05);
+	--sombra-boton-hover: 0 4px 14px 0 rgba(0, 0, 255, 0.35);
 }
 
-/* Efectos de Hover para las Tarjetas (Cards) */
+section {
+	margin-top: 4rem !important;
+	margin-bottom: 4rem !important;
+	padding-top: 3rem !important;
+	padding-bottom: 3rem !important;
+}
+
+.card-body {
+	padding: 1.75rem !important;
+}
+
+.card, .img-fluid, .form-control {
+	border-radius: 8px !important;
+}
+
 .card {
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	border: 1px solid var(--gris-borde) !important;
+}
+
+.form-control:focus {
+	border-color: var(--azul-principal) !important;
+	box-shadow: 0 0 0 0.25rem rgba(0, 0, 255, 0.25) !important;
+}
+
+.card {
+	box-shadow: var(--sombra-tarjeta);
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 .card:hover {
-	transform: translateY(-5px);
-	box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 255, 0.1) !important;
+	transform: translateY(-6px);
+	box-shadow: var(--sombra-tarjeta-hover) !important;
 }
 
-/* Transiciones Suaves para Botones */
 .btn {
-	transition: all 0.3s ease;
+	transition: all 0.2s ease-in-out !important;
 }
 
 .btn:hover {
-	filter: brightness(1.1);
+	transform: translateY(-2px);
+	box-shadow: var(--sombra-boton-hover);
+	filter: brightness(1.15);
 }
 
-/* Animación del menú de navegación (Subrayado Amarillo al pasar el mouse) */
+.btn:active {
+	transform: translateY(0);
+}
+
 .navbar-nav .nav-link {
 	position: relative;
-	transition: color 0.3s ease;
+	transition: color 0.25s ease;
 }
 
 .navbar-nav .nav-link::after {
@@ -45,7 +89,7 @@ html {
 	bottom: 0;
 	left: 5%;
 	background-color: var(--amarillo);
-	transition: width 0.3s ease;
+	transition: width 0.25s ease;
 }
 
 .navbar-nav .nav-link:hover::after {
