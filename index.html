@@ -10,8 +10,10 @@
 </head>
 
 <body>
-	<header>
-		<h1>Cibercore - Soluciones Digitales</h1>
+	<header class="py-4 bg-light text-center border-bottom">
+		<div class="container">
+			<h1 class="h3 mb-0 fw-bold" style="color: #0000FF;">Cibercore - Soluciones Digitales</h1>
+		</div>
 	</header>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -69,14 +71,21 @@
 			</div>
 		</section>
 
-		<section id="proyectos">
-			<article>
-				<h2>Proyectos</h2>
-				<iframe width="1331" height="754" src="https://www.youtube.com/embed/eBTqQk6dQs8"
-					title="Soluciones Tecnológicas" frameborder="0"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-					referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</article>
+		<section id="proyectos" class="py-5 my-5 text-center">
+			<div class="container">
+				<h2 class="display-5 fw-bold mb-5">Proyectos</h2>
+				<div class="row justify-content-center">
+					<div class="col-lg-10">
+						<article class="ratio ratio-16x9 rounded shadow-sm overflow-hidden">
+							<iframe src="https://www.youtube.com/embed/eBTqQk6dQs8"
+								title="Soluciones Tecnológicas"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+							</iframe>
+						</article>
+					</div>
+				</div>
+			</div>
 		</section>
 		<section id="quienessomos" class="py-5 my-5">
 			<div class="container">
@@ -217,54 +226,67 @@
 			</div>
 		</section>
 
-		<aside>
-			<h3>Información adicional</h3>
+		<aside class="py-5 my-5 bg-light border-top border-bottom">
+			<div class="container py-3">
+				<h3 class="display-6 fw-bold mb-5 text-center">Información adicional</h3>
+				<div class="row g-4">
+					<section class="col-md-6 col-lg-3">
+						<h4 class="h5 fw-bold mb-3" style="color: #0000FF;">⏰ Horarios de Atención</h4>
+						<ul class="list-unstyled mb-0">
+							<li class="mb-2">Lunes - Viernes: 8:00 AM - 6:00 PM</li>
+							<li class="mb-2">Sábado: 9:00 AM - 1:00 PM</li>
+							<li class="mb-2">Domingo: Cerrado</li>
+						</ul>
+					</section>
 
-			<section>
-				<h4>⏰ Horarios de Atención</h4>
-				<ul>
-					<li>Lunes - Viernes: 8:00 AM - 6:00 PM</li>
-					<li>Sábado: 9:00 AM - 1:00 PM</li>
-					<li>Domingo: Cerrado</li>
-				</ul>
-			</section>
+					<section class="col-md-6 col-lg-3">
+						<h4 class="h5 fw-bold mb-3" style="color: #0000FF;">🎁 Promociones Especiales</h4>
+						<ul class="list-unstyled mb-0">
+							<li class="mb-2"><strong>Descuento 15%</strong> en proyectos de desarrollo web</li>
+							<li class="mb-2"><strong>Consultoría gratuita</strong> para empresas nuevas</li>
+							<li class="mb-2"><strong>Soporte 24/7</strong> en paquetes premium</li>
+						</ul>
+					</section>
 
-			<section>
-				<h4>🎁 Promociones Especiales</h4>
-				<ul>
-					<li><strong>Descuento 15%</strong> en proyectos de desarrollo web</li>
-					<li><strong>Consultoría gratuita</strong> para empresas nuevas</li>
-					<li><strong>Soporte 24/7</strong> en paquetes premium</li>
-				</ul>
-			</section>
+					<section class="col-md-6 col-lg-3">
+						<h4 class="h5 fw-bold mb-3" style="color: #0000FF;">✅ Garantía de Calidad</h4>
+						<ul class="list-unstyled mb-0">
+							<li class="mb-2">Código 100% personalizado</li>
+							<li class="mb-2">Soporte técnico incluido por 3 meses</li>
+							<li class="mb-2">Actualizaciones y mantenimiento garantizado</li>
+						</ul>
+					</section>
 
-			<section>
-				<h4>✅ Garantía de Calidad</h4>
-				<ul>
-					<li>Código 100% personalizado</li>
-					<li>Soporte técnico incluido por 3 meses</li>
-					<li>Actualizaciones y mantenimiento garantizado</li>
-				</ul>
-			</section>
-
-			<section>
-				<h4>🏆 Certificaciones</h4>
-				<ul>
-					<li>Expertos en tecnologías web modernas</li>
-					<li>Seguridad y protección de datos</li>
-					<li>Metodologías ágiles de desarrollo</li>
-				</ul>
-			</section>
-
-			<hr>
+					<section class="col-md-6 col-lg-3">
+						<h4 class="h5 fw-bold mb-3" style="color: #0000FF;">🏆 Certificaciones</h4>
+						<ul class="list-unstyled mb-0">
+							<li class="mb-2">Expertos en tecnologías web modernas</li>
+							<li class="mb-2">Seguridad y protección de datos</li>
+							<li class="mb-2">Metodologías ágiles de desarrollo</li>
+						</ul>
+					</section>
+				</div>
+			</div>
 		</aside>
 	</main>
 
-	<footer>
-		<p><strong>Cibercore - Soluciones Tecnológicas</strong></p>
-		<p><strong>Estudiante:</strong> Norman Vladimir Eras Peña</p>
-		<p><strong>Asignatura:</strong> Desarrollo de Aplicaciones Web</p>
-		<p><strong>Año:</strong> 2026</p>
+	<footer class="bg-dark text-white py-5 mt-5 border-top">
+		<div class="container">
+			<div class="row g-4 text-center text-md-start">
+				<div class="col-md-3">
+					<p class="mb-0"><strong>Cibercore - Soluciones Tecnológicas</strong></p>
+				</div>
+				<div class="col-md-3">
+					<p class="mb-0"><strong>Estudiante:</strong> Norman Vladimir Eras Peña</p>
+				</div>
+				<div class="col-md-3">
+					<p class="mb-0"><strong>Asignatura:</strong> Desarrollo de Aplicaciones Web</p>
+				</div>
+				<div class="col-md-3">
+					<p class="mb-0"><strong>Año:</strong> 2026</p>
+				</div>
+			</div>
+		</div>
 	</footer>
 </body>
 
