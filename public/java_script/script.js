@@ -491,6 +491,68 @@ function limpiarErrores() {
   });
 }
 
+const nombresServicios = {
+  software:   "Desarrollo de software a medida",
+  web:        "Aplicaciones web modernas y responsivas",
+  gestion:    "Diseño de plataformas de gestión",
+  soluciones: "Soluciones tecnológicas personalizadas",
+  otro:       "Otro / No estoy seguro",
+};
+
+const contadorServicios = {
+  software:   0,
+  web:        0,
+  gestion:    0,
+  soluciones: 0,
+  otro:       0,
+};
+
+function renderContador() {
+  let panel = document.getElementById("panel-contador");
+
+  if (!panel) {
+    panel = document.createElement("div");
+    panel.id = "panel-contador";
+    panel.style.cssText =
+      "background:#fff; border:2px solid #0000FF; border-radius:12px;" +
+      "padding:20px 24px; margin-top:24px;";
+
+    const titulo = document.createElement("h4");
+    titulo.textContent = "Solicitudes por servicio";
+    titulo.style.cssText = "color:#0000FF; font-weight:700; margin-bottom:16px; font-size:1rem;";
+    panel.appendChild(titulo);
+
+    const tabla = document.createElement("table");
+    tabla.id = "tabla-contador";
+    tabla.style.cssText = "width:100%; border-collapse:collapse; font-size:0.9rem;";
+    panel.appendChild(tabla);
+
+    const cardForm = document.querySelector(".card.border-0.shadow");
+    cardForm.appendChild(panel);
+  }
+
+  const tabla = document.getElementById("tabla-contador");
+  tabla.innerHTML = "";
+
+  Object.keys(contadorServicios).forEach(function (clave) {
+    const fila = document.createElement("tr");
+
+    const tdNombre = document.createElement("td");
+    tdNombre.textContent = nombresServicios[clave];
+    tdNombre.style.cssText = "padding:6px 8px; border-bottom:1px solid #eee; color:#333;";
+
+    const tdCount = document.createElement("td");
+    tdCount.textContent = contadorServicios[clave];
+    tdCount.style.cssText =
+      "padding:6px 8px; border-bottom:1px solid #eee; font-weight:700;" +
+      "color:#0000FF; text-align:right; min-width:60px;";
+
+    fila.appendChild(tdNombre);
+    fila.appendChild(tdCount);
+    tabla.appendChild(fila);
+  });
+}
+
 document.getElementById("form-cotizacion").addEventListener("submit", function (evento) {
   evento.preventDefault();
 
@@ -563,6 +625,9 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   mensajeExito.style.cssText =
     "background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:8px;" +
     "padding:16px 20px; margin-top:16px; font-weight:700; font-size:1rem; text-align:center;";
+
+  contadorServicios[servicio] = (contadorServicios[servicio] || 0) + 1;
+  renderContador();
 
   resumen.parentNode.insertBefore(mensajeExito, resumen.nextSibling);
   mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
