@@ -272,3 +272,114 @@ cards.forEach(function (card) {
   card.style.transition = "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease";
   observer.observe(card);
 });
+
+// ============================================================
+//  FORMULARIO DE COTIZACIÓN — Manipulación del DOM y Eventos
+// ============================================================
+
+// ── 1. Nodos del formulario ──────────────────────────────────
+const formCotizacion   = document.getElementById("form-cotizacion");
+const campoDescripcion = document.getElementById("cot-descripcion");
+const contadorChars    = document.getElementById("cot-contador");
+const plazoError       = document.getElementById("plazo-error");
+const confirmacion     = document.getElementById("cot-confirmacion");
+const btnCotizar       = document.getElementById("btn-cotizar");
+
+const MAX_CHARS = 500;
+
+// ── 2. Contador de caracteres en el textarea ─────────────────
+// Evento input → actualiza el contador y limita a MAX_CHARS
+campoDescripcion.addEventListener("input", function () {
+  const cantidad = this.value.length;
+
+  // Recortar si supera el límite
+  if (cantidad > MAX_CHARS) {
+    this.value = this.value.substring(0, MAX_CHARS);
+  }
+
+  // Actualizar el contador en el DOM
+  contadorChars.textContent = Math.min(cantidad, MAX_CHARS);
+
+  // Cambiar color cuando se acerca al límite
+  if (cantidad >= MAX_CHARS * 0.9) {
+    contadorChars.style.color = "#cc0000";
+    contadorChars.style.fontWeight = "700";
+  } else {
+    contadorChars.style.color = "";
+    contadorChars.style.fontWeight = "";
+  }
+});
+
+// ── 3. Validación del grupo de radios (plazo) ────────────────
+// Bootstrap no valida radios agrupados automáticamente,
+// así que lo hacemos manualmente con JS
+function validarPlazo() {
+  const radios = document.querySelectorAll("input[name='cot-plazo']");
+  const alguno = Array.from(radios).some(function (r) { return r.checked; });
+  plazoError.style.display = alguno ? "none" : "block";
+  return alguno;
+}
+
+// Ocultar el error de plazo en cuanto el usuario selecciona uno
+document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
+  radio.addEventListener("change", function () {
+    plazoError.style.display = "none";
+  });
+});
+
+// ── 4. Envío del formulario con validación ───────────────────
+formCotizacion.addEventListener("submit", function (evento) {
+  evento.preventDefault();   // evitar recarga de página
+
+  // Activar estilos de validación de Bootstrap
+  formCotizacion.classList.add("was-validated");
+
+  const plazoValido     = validarPlazo();
+  const formularioValido = formCotizacion.checkValidity();
+
+  // Si algún campo no es válido, detener
+  if (!formularioValido || !plazoValido) {
+    // Hacer scroll al primer campo inválido
+    const primerError = formCotizacion.querySelector(":invalid");
+    if (primerError) {
+      primerError.scrollIntoView({ behavior: "smooth", block: "center" });
+      primerError.focus();
+    }
+    return;
+  }
+
+  // ── Todo válido: simular envío ───────────────────────────
+  // Deshabilitar botón y mostrar estado de carga
+  btnCotizar.disabled = true;
+  btnCotizar.textContent = "Enviando...";
+
+  // Simular retardo de red (500 ms) y luego mostrar confirmación
+  setTimeout(function () {
+    // Ocultar el formulario y mostrar mensaje de éxito
+    formCotizacion.style.display = "none";
+    confirmacion.style.display   = "block";
+
+    // Hacer scroll suave al mensaje de confirmación
+    confirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 500);
+});
+
+// ── 5. Efecto focus en los campos de texto ───────────────────
+// Resaltar el borde del campo activo con el color corporativo
+const camposTexto = document.querySelectorAll(
+  "#form-cotizacion input[type='text'], " +
+  "#form-cotizacion input[type='email'], " +
+  "#form-cotizacion select, " +
+  "#form-cotizacion textarea"
+);
+
+camposTexto.forEach(function (campo) {
+  campo.addEventListener("focus", function () {
+    this.style.borderColor  = "#0000FF";
+    this.style.boxShadow    = "0 0 0 0.2rem rgba(0, 0, 255, 0.20)";
+  });
+  campo.addEventListener("blur", function () {
+    this.style.borderColor = "";
+    this.style.boxShadow   = "";
+  });
+});
