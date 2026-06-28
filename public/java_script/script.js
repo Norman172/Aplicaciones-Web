@@ -274,8 +274,28 @@ document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
   });
 });
 
+function mostrarError(idCampo, mensaje) {
+  const campo = document.getElementById(idCampo);
+  const error = document.createElement("span");
+  error.className = "error-campo";
+  error.textContent = mensaje;
+  error.style.color = "red";
+  error.style.fontSize = "0.85rem";
+  error.style.display = "block";
+  error.style.marginTop = "4px";
+  campo.parentNode.appendChild(error);
+}
+
+function limpiarErrores() {
+  document.querySelectorAll(".error-campo").forEach(function (e) {
+    e.remove();
+  });
+}
+
 document.getElementById("form-cotizacion").addEventListener("submit", function (evento) {
   evento.preventDefault();
+
+  limpiarErrores();
 
   const nombre      = document.getElementById("cot-nombre").value.trim();
   const email       = document.getElementById("cot-email").value.trim();
@@ -285,12 +305,17 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   const plazoRadio  = document.querySelector("input[name='cot-plazo']:checked");
   const plazo       = plazoRadio ? plazoRadio.value : "";
 
-  if (nombre === "" || email === "" || servicio === "" || presupuesto === "" || descripcion === "" || plazo === "") {
-    alert("Por favor completa todos los campos antes de enviar la cotización.");
-    return;
-  }
+  let valido = true;
 
-  console.log("=== Solicitud de Cotización Recibida ===");
+  if (nombre === "")     { mostrarError("cot-nombre",      "Campo vacío"); valido = false; }
+  if (email === "")      { mostrarError("cot-email",       "Campo vacío"); valido = false; }
+  if (servicio === "")   { mostrarError("cot-servicio",    "Campo vacío"); valido = false; }
+  if (presupuesto === "") { mostrarError("cot-presupuesto", "Campo vacío"); valido = false; }
+  if (descripcion === "") { mostrarError("cot-descripcion", "Campo vacío"); valido = false; }
+  if (plazo === "")      { mostrarError("cot-plazo-group", "Campo vacío"); valido = false; }
+
+  if (!valido) return;
+
   console.log("Nombre:",      nombre);
   console.log("Email:",       email);
   console.log("Servicio:",    servicio);
@@ -300,8 +325,8 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
 
   document.getElementById("form-cotizacion").reset();
   contadorChars.textContent = "0";
-  document.getElementById("cot-confirmacion").style.display = "block";
-  document.getElementById("cot-confirmacion").scrollIntoView({ behavior: "smooth", block: "center" });
+
+  alert("Envío de formulario exitoso.");
 });
 
 
