@@ -1,3 +1,101 @@
+const redesData = [
+  { texto: "Facebook",  href: "https://www.facebook.com",  clase: "btn btn-outline-primary btn-sm" },
+  { texto: "Instagram", href: "https://www.instagram.com", clase: "btn btn-outline-danger btn-sm" },
+  { texto: "LinkedIn",  href: "https://www.linkedin.com",  clase: "btn btn-outline-info btn-sm" },
+];
+
+const redesLista = document.getElementById("redes-lista");
+redesData.forEach(function (red) {
+  const li = document.createElement("li");
+  li.className = "list-inline-item";
+  const a = document.createElement("a");
+  a.href = red.href;
+  a.target = "_blank";
+  a.rel = "noopener noreferrer";
+  a.className = red.clase;
+  a.textContent = red.texto;
+  li.appendChild(a);
+  redesLista.appendChild(li);
+});
+
+const asideData = [
+  {
+    titulo: "⏰ Horarios de Atención",
+    items: ["Lunes - Viernes: 8:00 AM - 6:00 PM", "Sábado: 9:00 AM - 1:00 PM", "Domingo: Cerrado"],
+  },
+  {
+    titulo: "🎁 Promociones Especiales",
+    items: ["Descuento 15% en proyectos de desarrollo web", "Consultoría gratuita para empresas nuevas", "Soporte 24/7 en paquetes premium"],
+  },
+  {
+    titulo: "✅ Garantía de Calidad",
+    items: ["Código 100% personalizado", "Soporte técnico incluido por 3 meses", "Actualizaciones y mantenimiento garantizado"],
+  },
+  {
+    titulo: "🏆 Certificaciones",
+    items: ["Expertos en tecnologías web modernas", "Seguridad y protección de datos", "Metodologías ágiles de desarrollo"],
+  },
+];
+
+const asideGrid = document.getElementById("aside-grid");
+asideData.forEach(function (bloque) {
+  const section = document.createElement("section");
+  section.className = "col-md-6 col-lg-3";
+
+  const card = document.createElement("div");
+  card.className = "card p-3 m-3 h-100 border-0 shadow-sm text-center";
+
+  const h4 = document.createElement("h4");
+  h4.className = "h5 fw-bold mb-3";
+  h4.style.color = "#0000FF";
+  h4.textContent = bloque.titulo;
+
+  const ul = document.createElement("ul");
+  ul.className = "list-unstyled mb-0";
+
+  bloque.items.forEach(function (texto) {
+    const li = document.createElement("li");
+    li.className = "mb-2";
+    li.textContent = texto;
+    ul.appendChild(li);
+  });
+
+  card.appendChild(h4);
+  card.appendChild(ul);
+  section.appendChild(card);
+  asideGrid.appendChild(section);
+});
+
+const footerData = [
+  { etiqueta: null,          valor: "Cibercore - Soluciones Tecnológicas" },
+  { etiqueta: "Estudiante:", valor: "Norman Vladimir Eras Peña" },
+  { etiqueta: "Asignatura:", valor: "Desarrollo de Aplicaciones Web" },
+  { etiqueta: "Año:",        valor: "2026" },
+];
+
+const footerGrid = document.getElementById("footer-grid");
+footerData.forEach(function (dato) {
+  const col = document.createElement("div");
+  col.className = "col-md-3";
+
+  const p = document.createElement("p");
+  p.className = "mb-0";
+
+  if (dato.etiqueta) {
+    const strong = document.createElement("strong");
+    strong.textContent = dato.etiqueta + " ";
+    p.appendChild(strong);
+    p.appendChild(document.createTextNode(dato.valor));
+  } else {
+    const strong = document.createElement("strong");
+    strong.textContent = dato.valor;
+    p.appendChild(strong);
+  }
+
+  col.appendChild(p);
+  footerGrid.appendChild(col);
+});
+
 const navItems = [
   { texto: "Inicio",        href: "#inicio" },
   { texto: "Qui\u00e9nes somos", href: "#quienessomos" },
@@ -365,11 +463,18 @@ function mostrarError(idCampo, mensaje) {
   const campo = document.getElementById(idCampo);
   const error = document.createElement("span");
   error.className = "error-campo";
-  error.textContent = mensaje;
   error.style.color = "red";
   error.style.fontSize = "0.85rem";
   error.style.display = "block";
   error.style.marginTop = "4px";
+
+  const icono = document.createElement("span");
+  icono.textContent = "⚠️ ";
+
+  const texto = document.createTextNode(mensaje);
+
+  error.appendChild(icono);
+  error.appendChild(texto);
   campo.parentNode.appendChild(error);
 }
 
