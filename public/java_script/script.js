@@ -1,9 +1,3 @@
-// ============================================================
-//  SECCIÓN SERVICIOS — Manipulación del DOM y Manejo de Eventos
-// ============================================================
-
-// ── 1. Datos extendidos de cada servicio ────────────────────
-// Se corresponden con el orden de las cards en el HTML
 const serviciosData = [
   {
     titulo: "Desarrollo de software a medida",
@@ -55,18 +49,13 @@ const serviciosData = [
   },
 ];
 
-// ── 2. Selección de nodos del DOM ────────────────────────────
-// Obtenemos todas las cards de la sección de servicios
 const seccionServicios = document.querySelector("#servicios");
 const cards = seccionServicios.querySelectorAll(".card");
 const botonesVerMas = seccionServicios.querySelectorAll(".card .btn");
 
-// ── 3. Enriquecer cada card con datos extendidos via DOM ─────
-// Añadimos el icono y la categoría a cada card sin alterar lo existente
 cards.forEach(function (card, indice) {
   const datos = serviciosData[indice];
 
-  // 3.a  Insertar badge de categoría en la parte superior de la card
   const badge = document.createElement("span");
   badge.textContent = datos.icono + " " + datos.categoria;
   badge.style.cssText =
@@ -74,38 +63,28 @@ cards.forEach(function (card, indice) {
     "font-size:0.75rem; font-weight:700; padding:3px 10px; border-radius:20px;" +
     "letter-spacing:0.5px; z-index:2; box-shadow:0 2px 6px rgba(0,0,255,0.3);";
 
-  // La card necesita position:relative para que el badge se posicione dentro
   card.style.position = "relative";
   card.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
   card.insertBefore(badge, card.firstChild);
 
-  // 3.b  Actualizar el botón para que NO navegue directamente,
-  //      sino que abra el modal con detalle del servicio
   const boton = botonesVerMas[indice];
-  boton.removeAttribute("href");         // quitamos el href estático
+  boton.removeAttribute("href");
   boton.style.cursor = "pointer";
-
-  // Guardamos el índice como atributo personalizado (data attribute)
   boton.setAttribute("data-servicio-id", indice);
 });
 
-// ── 4. Manejo de Eventos: hover en las cards ─────────────────
 cards.forEach(function (card) {
-  // Evento mouseenter → elevar la card
   card.addEventListener("mouseenter", function () {
     this.style.transform = "translateY(-8px) scale(1.02)";
     this.style.boxShadow = "0 12px 32px rgba(0, 0, 255, 0.18)";
   });
 
-  // Evento mouseleave → restaurar estado normal
   card.addEventListener("mouseleave", function () {
     this.style.transform = "translateY(0) scale(1)";
     this.style.boxShadow = "";
   });
 });
 
-// ── 5. Crear el Modal via DOM (manipulación del DOM) ─────────
-// El modal se genera completamente desde JavaScript
 const overlay = document.createElement("div");
 overlay.id = "modal-overlay";
 overlay.style.cssText =
@@ -120,7 +99,6 @@ modalCaja.style.cssText =
   "position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.25);" +
   "animation:modalEntrada 0.3s ease;";
 
-// Inyectar animación de entrada con un <style> creado por JS
 const estiloModal = document.createElement("style");
 estiloModal.textContent =
   "@keyframes modalEntrada {" +
@@ -129,7 +107,6 @@ estiloModal.textContent =
   "}";
 document.head.appendChild(estiloModal);
 
-// Botón de cierre del modal
 const btnCerrar = document.createElement("button");
 btnCerrar.textContent = "✕";
 btnCerrar.style.cssText =
@@ -137,22 +114,18 @@ btnCerrar.style.cssText =
   "font-size:1.4rem; cursor:pointer; color:#555; line-height:1;";
 btnCerrar.setAttribute("aria-label", "Cerrar modal");
 
-// Contenido dinámico del modal (se llenará al abrir)
 const modalContenido = document.createElement("div");
 modalContenido.id = "modal-contenido";
 
-// Ensamblar el modal en el DOM
 modalCaja.appendChild(btnCerrar);
 modalCaja.appendChild(modalContenido);
 overlay.appendChild(modalCaja);
 document.body.appendChild(overlay);
 
-// ── 6. Funciones para abrir y cerrar el modal ────────────────
 function abrirModal(indice) {
   const datos = serviciosData[indice];
 
-  // Construir contenido del modal via DOM
-  modalContenido.innerHTML = "";          // limpiar contenido anterior
+  modalContenido.innerHTML = "";
 
   const encabezado = document.createElement("div");
   encabezado.style.cssText = "display:flex; align-items:center; gap:12px; margin-bottom:16px;";
@@ -194,7 +167,6 @@ function abrirModal(indice) {
     "padding:10px 28px; border-radius:8px; text-decoration:none; font-size:0.95rem;" +
     "transition:background 0.2s;";
 
-  // Hover en el botón del modal
   btnContactar.addEventListener("mouseenter", function () {
     this.style.background = "#0000cc";
   });
@@ -202,29 +174,25 @@ function abrirModal(indice) {
     this.style.background = "#0000FF";
   });
 
-  // Cerrar modal al hacer clic en "Contáctanos"
   btnContactar.addEventListener("click", function () {
     cerrarModal();
   });
 
-  // Agregar todos los elementos al modal
   modalContenido.appendChild(encabezado);
   modalContenido.appendChild(descripcionModal);
   modalContenido.appendChild(subtitulo);
   modalContenido.appendChild(lista);
   modalContenido.appendChild(btnContactar);
 
-  // Mostrar overlay
   overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";   // bloquear scroll de fondo
+  document.body.style.overflow = "hidden";
 }
 
 function cerrarModal() {
   overlay.style.display = "none";
-  document.body.style.overflow = "";         // restaurar scroll
+  document.body.style.overflow = "";
 }
 
-// ── 7. Manejo de Eventos: abrir modal al hacer clic en "Saber más" ──
 botonesVerMas.forEach(function (boton) {
   boton.addEventListener("click", function () {
     const id = parseInt(this.getAttribute("data-servicio-id"), 10);
@@ -232,33 +200,27 @@ botonesVerMas.forEach(function (boton) {
   });
 });
 
-// ── 8. Manejo de Eventos: cerrar el modal ───────────────────
-// Clic en la "X"
 btnCerrar.addEventListener("click", cerrarModal);
 
-// Clic fuera del cuadro del modal (en el overlay)
 overlay.addEventListener("click", function (evento) {
   if (evento.target === overlay) {
     cerrarModal();
   }
 });
 
-// Tecla Escape para cerrar el modal
 document.addEventListener("keydown", function (evento) {
   if (evento.key === "Escape") {
     cerrarModal();
   }
 });
 
-// ── 9. Animación de entrada con IntersectionObserver ─────────
-// Cada card aparece con fadeIn cuando entra al viewport
 const observer = new IntersectionObserver(
   function (entradas) {
     entradas.forEach(function (entrada) {
       if (entrada.isIntersecting) {
         entrada.target.style.opacity = "1";
         entrada.target.style.transform = "translateY(0)";
-        observer.unobserve(entrada.target);   // dejar de observar después de animarse
+        observer.unobserve(entrada.target);
       }
     });
   },
@@ -266,18 +228,12 @@ const observer = new IntersectionObserver(
 );
 
 cards.forEach(function (card) {
-  // Estado inicial antes de que el observer las active
   card.style.opacity = "0";
   card.style.transform = "translateY(40px)";
   card.style.transition = "opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease";
   observer.observe(card);
 });
 
-// ============================================================
-//  FORMULARIO DE COTIZACIÓN — Manipulación del DOM y Eventos
-// ============================================================
-
-// ── 1. Nodos del formulario ──────────────────────────────────
 const formCotizacion   = document.getElementById("form-cotizacion");
 const campoDescripcion = document.getElementById("cot-descripcion");
 const contadorChars    = document.getElementById("cot-contador");
@@ -287,20 +243,15 @@ const btnCotizar       = document.getElementById("btn-cotizar");
 
 const MAX_CHARS = 500;
 
-// ── 2. Contador de caracteres en el textarea ─────────────────
-// Evento input → actualiza el contador y limita a MAX_CHARS
 campoDescripcion.addEventListener("input", function () {
   const cantidad = this.value.length;
 
-  // Recortar si supera el límite
   if (cantidad > MAX_CHARS) {
     this.value = this.value.substring(0, MAX_CHARS);
   }
 
-  // Actualizar el contador en el DOM
   contadorChars.textContent = Math.min(cantidad, MAX_CHARS);
 
-  // Cambiar color cuando se acerca al límite
   if (cantidad >= MAX_CHARS * 0.9) {
     contadorChars.style.color = "#cc0000";
     contadorChars.style.fontWeight = "700";
@@ -310,9 +261,6 @@ campoDescripcion.addEventListener("input", function () {
   }
 });
 
-// ── 3. Validación del grupo de radios (plazo) ────────────────
-// Bootstrap no valida radios agrupados automáticamente,
-// así que lo hacemos manualmente con JS
 function validarPlazo() {
   const radios = document.querySelectorAll("input[name='cot-plazo']");
   const alguno = Array.from(radios).some(function (r) { return r.checked; });
@@ -320,52 +268,37 @@ function validarPlazo() {
   return alguno;
 }
 
-// Ocultar el error de plazo en cuanto el usuario selecciona uno
 document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
   radio.addEventListener("change", function () {
     plazoError.style.display = "none";
   });
 });
 
-// ── 4. Envío del formulario con validación ───────────────────
-formCotizacion.addEventListener("submit", function (evento) {
-  evento.preventDefault();   // evitar recarga de página
+document.getElementById("form-cotizacion").addEventListener("submit", function (evento) {
+  evento.preventDefault();
 
-  // Activar estilos de validación de Bootstrap
-  formCotizacion.classList.add("was-validated");
+  const nombre      = document.getElementById("cot-nombre").value;
+  const email       = document.getElementById("cot-email").value;
+  const servicio    = document.getElementById("cot-servicio").value;
+  const presupuesto = document.getElementById("cot-presupuesto").value;
+  const descripcion = document.getElementById("cot-descripcion").value;
+  const plazoRadio  = document.querySelector("input[name='cot-plazo']:checked");
+  const plazo       = plazoRadio ? plazoRadio.value : "";
 
-  const plazoValido     = validarPlazo();
-  const formularioValido = formCotizacion.checkValidity();
+  console.log("=== Solicitud de Cotización Recibida ===");
+  console.log("Nombre:",      nombre);
+  console.log("Email:",       email);
+  console.log("Servicio:",    servicio);
+  console.log("Presupuesto:", presupuesto);
+  console.log("Plazo:",       plazo);
+  console.log("Descripción:", descripcion);
 
-  // Si algún campo no es válido, detener
-  if (!formularioValido || !plazoValido) {
-    // Hacer scroll al primer campo inválido
-    const primerError = formCotizacion.querySelector(":invalid");
-    if (primerError) {
-      primerError.scrollIntoView({ behavior: "smooth", block: "center" });
-      primerError.focus();
-    }
-    return;
-  }
-
-  // ── Todo válido: simular envío ───────────────────────────
-  // Deshabilitar botón y mostrar estado de carga
-  btnCotizar.disabled = true;
-  btnCotizar.textContent = "Enviando...";
-
-  // Simular retardo de red (500 ms) y luego mostrar confirmación
-  setTimeout(function () {
-    // Ocultar el formulario y mostrar mensaje de éxito
-    formCotizacion.style.display = "none";
-    confirmacion.style.display   = "block";
-
-    // Hacer scroll suave al mensaje de confirmación
-    confirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 500);
+  document.getElementById("form-cotizacion").reset();
+  contadorChars.textContent = "0";
+  document.getElementById("cot-confirmacion").style.display = "block";
+  document.getElementById("cot-confirmacion").scrollIntoView({ behavior: "smooth", block: "center" });
 });
 
-// ── 5. Efecto focus en los campos de texto ───────────────────
-// Resaltar el borde del campo activo con el color corporativo
 const camposTexto = document.querySelectorAll(
   "#form-cotizacion input[type='text'], " +
   "#form-cotizacion input[type='email'], " +
