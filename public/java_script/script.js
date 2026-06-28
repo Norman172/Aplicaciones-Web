@@ -46,8 +46,7 @@ asideData.forEach(function (bloque) {
   card.className = "card p-3 m-3 h-100 border-0 shadow-sm text-center";
 
   const h4 = document.createElement("h4");
-  h4.className = "h5 fw-bold mb-3";
-  h4.style.color = "#0000FF";
+  h4.className = "h5 fw-bold mb-3 text-primary";
   h4.textContent = bloque.titulo;
 
   const ul = document.createElement("ul");
@@ -151,9 +150,8 @@ blogData.forEach(function (post) {
   cardBody.className = "card-body d-flex flex-column p-4";
 
   const badge = document.createElement("span");
-  badge.className = "badge mb-3";
+  badge.className = "badge bg-primary text-white mb-3 align-self-start";
   badge.textContent = post.categoria;
-  badge.style.cssText = "background:#0000FF; color:#fff; font-size:0.75rem; width:fit-content;";
 
   const titulo = document.createElement("h3");
   titulo.className = "card-title h5 fw-bold mb-2";
@@ -169,9 +167,8 @@ blogData.forEach(function (post) {
 
   const btn = document.createElement("a");
   btn.href = "#";
-  btn.className = "btn mt-3 fw-bold";
+  btn.className = "btn btn-primary mt-3 fw-bold";
   btn.textContent = "Leer m\u00e1s";
-  btn.style.cssText = "background:#0000FF; color:#fff; border:none;";
 
   cardBody.appendChild(badge);
   cardBody.appendChild(titulo);
@@ -242,11 +239,9 @@ cards.forEach(function (card, indice) {
   const datos = serviciosData[indice];
 
   const badge = document.createElement("span");
+  badge.className = "badge bg-primary text-white position-absolute top-0 start-0 m-3 shadow-sm rounded-pill";
+  badge.style.zIndex = "2";
   badge.textContent = datos.icono + " " + datos.categoria;
-  badge.style.cssText =
-    "position:absolute; top:10px; left:10px; background:#0000FF; color:#fff;" +
-    "font-size:0.75rem; font-weight:700; padding:3px 10px; border-radius:20px;" +
-    "letter-spacing:0.5px; z-index:2; box-shadow:0 2px 6px rgba(0,0,255,0.3);";
 
   card.style.position = "relative";
   card.style.transition = "transform 0.3s ease, box-shadow 0.3s ease";
@@ -313,44 +308,41 @@ function abrirModal(indice) {
   modalContenido.innerHTML = "";
 
   const encabezado = document.createElement("div");
-  encabezado.style.cssText = "display:flex; align-items:center; gap:12px; margin-bottom:16px;";
+  encabezado.className = "d-flex align-items-center gap-3 mb-3";
 
   const icono = document.createElement("span");
   icono.textContent = datos.icono;
-  icono.style.cssText = "font-size:2.2rem;";
+  icono.className = "fs-1";
 
   const tituloModal = document.createElement("h3");
   tituloModal.textContent = datos.titulo;
-  tituloModal.style.cssText = "color:#0000FF; font-weight:700; font-size:1.1rem; margin:0;";
+  tituloModal.className = "text-primary fw-bold h5 m-0";
 
   encabezado.appendChild(icono);
   encabezado.appendChild(tituloModal);
 
   const descripcionModal = document.createElement("p");
   descripcionModal.textContent = datos.descripcion;
-  descripcionModal.style.cssText = "color:#555; font-size:0.95rem; margin-bottom:18px; line-height:1.6;";
+  descripcionModal.className = "text-secondary mb-3";
 
   const subtitulo = document.createElement("p");
   subtitulo.textContent = "¿Qué incluye este servicio?";
-  subtitulo.style.cssText = "font-weight:700; color:#333; margin-bottom:10px; font-size:0.9rem;";
+  subtitulo.className = "fw-bold text-dark mb-2 small";
 
   const lista = document.createElement("ul");
-  lista.style.cssText = "padding-left:18px; margin-bottom:24px;";
+  lista.className = "ps-3 mb-4";
 
   datos.detalle.forEach(function (item) {
     const li = document.createElement("li");
     li.textContent = item;
-    li.style.cssText = "color:#444; font-size:0.9rem; margin-bottom:7px; line-height:1.5;";
+    li.className = "text-secondary small mb-1";
     lista.appendChild(li);
   });
 
   const btnContactar = document.createElement("a");
   btnContactar.href = "#contacto";
   btnContactar.textContent = "Contáctanos";
-  btnContactar.style.cssText =
-    "display:inline-block; background:#0000FF; color:#fff; font-weight:700;" +
-    "padding:10px 28px; border-radius:8px; text-decoration:none; font-size:0.95rem;" +
-    "transition:background 0.2s;";
+  btnContactar.className = "btn btn-primary fw-bold px-4 py-2 rounded-2 d-inline-block";
 
   btnContactar.addEventListener("mouseenter", function () {
     this.style.background = "#0000cc";
@@ -469,11 +461,7 @@ document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
 function mostrarError(idCampo, mensaje) {
   const campo = document.getElementById(idCampo);
   const error = document.createElement("span");
-  error.className = "error-campo";
-  error.style.color = "red";
-  error.style.fontSize = "0.85rem";
-  error.style.display = "block";
-  error.style.marginTop = "4px";
+  error.className = "error-campo text-danger small d-block mt-1";
 
   const icono = document.createElement("span");
   icono.textContent = "⚠️ ";
@@ -513,18 +501,16 @@ function renderContador() {
   if (!panel) {
     panel = document.createElement("div");
     panel.id = "panel-contador";
-    panel.style.cssText =
-      "background:#fff; border:2px solid #0000FF; border-radius:12px;" +
-      "padding:20px 24px; margin-top:24px;";
+    panel.className = "bg-white border border-2 border-primary rounded-3 p-4 mt-4 shadow-sm";
 
     const titulo = document.createElement("h4");
     titulo.textContent = "Solicitudes por servicio";
-    titulo.style.cssText = "color:#0000FF; font-weight:700; margin-bottom:16px; font-size:1rem;";
+    titulo.className = "text-primary fw-bold mb-3 h6";
     panel.appendChild(titulo);
 
     const tabla = document.createElement("table");
     tabla.id = "tabla-contador";
-    tabla.style.cssText = "width:100%; border-collapse:collapse; font-size:0.9rem;";
+    tabla.className = "table table-sm table-borderless mb-0";
     panel.appendChild(tabla);
 
     const cardForm = document.querySelector(".card.border-0.shadow");
@@ -539,13 +525,11 @@ function renderContador() {
 
     const tdNombre = document.createElement("td");
     tdNombre.textContent = nombresServicios[clave];
-    tdNombre.style.cssText = "padding:6px 8px; border-bottom:1px solid #eee; color:#333;";
+    tdNombre.className = "border-bottom py-2 text-dark";
 
     const tdCount = document.createElement("td");
     tdCount.textContent = contadorServicios[clave];
-    tdCount.style.cssText =
-      "padding:6px 8px; border-bottom:1px solid #eee; font-weight:700;" +
-      "color:#0000FF; text-align:right; min-width:60px;";
+    tdCount.className = "border-bottom py-2 fw-bold text-primary text-end";
 
     fila.appendChild(tdNombre);
     fila.appendChild(tdCount);
@@ -585,13 +569,11 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   console.log("Descripción:", descripcion);
 
   const resumen = document.createElement("div");
-  resumen.style.cssText =
-    "background:#f0f4ff; border-left:4px solid #0000FF; border-radius:8px;" +
-    "padding:16px 20px; margin-top:20px; font-size:0.9rem; color:#333;";
+  resumen.className = "alert alert-light border border-start-0 border-end-0 border-top-0 border-bottom-0 border-start border-4 border-primary shadow-sm mt-4 p-3 text-dark";
 
   const tituloResumen = document.createElement("p");
   tituloResumen.textContent = "Resumen de tu solicitud:";
-  tituloResumen.style.cssText = "font-weight:700; margin-bottom:10px; color:#0000FF;";
+  tituloResumen.className = "fw-bold mb-2 text-primary";
 
   const campos = [
     { etiqueta: "Nombre",      valor: nombre },
@@ -604,7 +586,7 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
 
   campos.forEach(function (c) {
     const fila = document.createElement("p");
-    fila.style.margin = "4px 0";
+    fila.className = "mb-1 small";
     const etiqueta = document.createElement("strong");
     etiqueta.textContent = c.etiqueta + ": ";
     fila.appendChild(etiqueta);
@@ -622,9 +604,7 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
 
   const mensajeExito = document.createElement("div");
   mensajeExito.textContent = "\u2705 Env\u00edo de formulario exitoso.";
-  mensajeExito.style.cssText =
-    "background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:8px;" +
-    "padding:16px 20px; margin-top:16px; font-weight:700; font-size:1rem; text-align:center;";
+  mensajeExito.className = "alert alert-success mt-3 fw-bold text-center shadow-sm";
 
   contadorServicios[servicio] = (contadorServicios[servicio] || 0) + 1;
   renderContador();
