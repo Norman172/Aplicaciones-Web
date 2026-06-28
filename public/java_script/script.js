@@ -277,13 +277,18 @@ document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
 document.getElementById("form-cotizacion").addEventListener("submit", function (evento) {
   evento.preventDefault();
 
-  const nombre      = document.getElementById("cot-nombre").value;
-  const email       = document.getElementById("cot-email").value;
+  const nombre      = document.getElementById("cot-nombre").value.trim();
+  const email       = document.getElementById("cot-email").value.trim();
   const servicio    = document.getElementById("cot-servicio").value;
   const presupuesto = document.getElementById("cot-presupuesto").value;
-  const descripcion = document.getElementById("cot-descripcion").value;
+  const descripcion = document.getElementById("cot-descripcion").value.trim();
   const plazoRadio  = document.querySelector("input[name='cot-plazo']:checked");
   const plazo       = plazoRadio ? plazoRadio.value : "";
+
+  if (nombre === "" || email === "" || servicio === "" || presupuesto === "" || descripcion === "" || plazo === "") {
+    alert("Por favor completa todos los campos antes de enviar la cotización.");
+    return;
+  }
 
   console.log("=== Solicitud de Cotización Recibida ===");
   console.log("Nombre:",      nombre);
@@ -298,6 +303,7 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   document.getElementById("cot-confirmacion").style.display = "block";
   document.getElementById("cot-confirmacion").scrollIntoView({ behavior: "smooth", block: "center" });
 });
+
 
 const camposTexto = document.querySelectorAll(
   "#form-cotizacion input[type='text'], " +
