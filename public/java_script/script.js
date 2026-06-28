@@ -425,8 +425,15 @@ const contadorChars    = document.getElementById("cot-contador");
 const plazoError       = document.getElementById("plazo-error");
 const confirmacion     = document.getElementById("cot-confirmacion");
 const btnCotizar       = document.getElementById("btn-cotizar");
+const btnLimpiar       = document.getElementById("btn-limpiar");
 
 const MAX_CHARS = 500;
+
+btnLimpiar.addEventListener("click", function () {
+  document.getElementById("form-cotizacion").reset();
+  limpiarErrores();
+  contadorChars.textContent = "0";
+});
 
 campoDescripcion.addEventListener("input", function () {
   const cantidad = this.value.length;
