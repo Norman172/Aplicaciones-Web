@@ -170,28 +170,24 @@
 						<div class="card border-0 shadow p-4 p-md-5">
 							<form id="form-cotizacion" novalidate>
 
-								<!-- Nombre completo -->
 								<div class="mb-4">
 									<label for="cot-nombre" class="form-label fw-semibold">Nombre completo <span class="text-danger">*</span></label>
 									<input type="text" class="form-control" id="cot-nombre" placeholder="Nombre y apellido o nombre de empresa" required>
 									<div class="invalid-feedback">Por favor ingresa tu nombre.</div>
 								</div>
 
-								<!-- Correo electrónico -->
 								<div class="mb-4">
 									<label for="cot-email" class="form-label fw-semibold">Correo electrónico <span class="text-danger">*</span></label>
 									<input type="email" class="form-control" id="cot-email" placeholder="nombre@correo.com" required>
 									<div class="invalid-feedback">Por favor ingresa un correo válido.</div>
 								</div>
 
-								<!-- Empresa (opcional) -->
 								<div class="mb-4">
 									<label for="cot-empresa" class="form-label fw-semibold">Empresa / Organización</label>
 									<input type="text" class="form-control" id="cot-empresa" placeholder="Nombre de tu empresa (opcional)">
 							<div class="invalid-feedback">El nombre de la empresa debe tener al menos 2 caracteres.</div>
 								</div>
 
-								<!-- Servicio de interés -->
 								<div class="mb-4">
 									<label for="cot-servicio" class="form-label fw-semibold">Servicio de interés <span class="text-danger">*</span></label>
 									<select class="form-select" id="cot-servicio" required>
@@ -205,7 +201,6 @@
 									<div class="invalid-feedback">Por favor selecciona un servicio.</div>
 								</div>
 
-								<!-- Presupuesto estimado -->
 								<div class="mb-4">
 									<label for="cot-presupuesto" class="form-label fw-semibold">Presupuesto estimado <span class="text-danger">*</span></label>
 									<select class="form-select" id="cot-presupuesto" required>
@@ -219,7 +214,6 @@
 									<div class="invalid-feedback">Por favor selecciona un rango de presupuesto.</div>
 								</div>
 
-								<!-- Plazo deseado -->
 								<div class="mb-4">
 									<label class="form-label fw-semibold">Plazo deseado <span class="text-danger">*</span></label>
 									<div class="d-flex flex-wrap gap-3 mt-1" id="cot-plazo-group">
@@ -243,7 +237,6 @@
 									<div id="plazo-error" class="text-danger small mt-1" style="display:none;">Por favor selecciona un plazo.</div>
 								</div>
 
-								<!-- Descripción del proyecto -->
 								<div class="mb-4">
 									<label for="cot-descripcion" class="form-label fw-semibold">Descripción del proyecto <span class="text-danger">*</span></label>
 									<textarea class="form-control" id="cot-descripcion" rows="4" placeholder="Describe brevemente tu proyecto, objetivos y cualquier detalle relevante..." required></textarea>
@@ -253,7 +246,6 @@
 									</div>
 								</div>
 
-								<!-- Botón enviar -->
 								<div class="d-grid">
 									<button type="submit" id="btn-cotizar" class="btn btn-lg fw-bold py-3" style="background-color: #0000FF; color: #FFFFFF; border: none;">
 										Enviar solicitud de cotización
@@ -266,7 +258,6 @@
 									</button>
 								</div>
 
-								<!-- Mensaje de confirmación (oculto hasta el envío) -->
 								<div id="cot-confirmacion" class="alert alert-success mt-4 text-center fw-semibold" style="display:none;" role="alert">
 									✅ ¡Solicitud enviada! Nos pondremos en contacto contigo a la brevedad.
 								</div>
@@ -305,25 +296,38 @@
 					
 					<div class="col-lg-7">
 						<div class="card p-4 shadow-sm border-0 bg-light">
-							<form>
-								<div class="mb-3">
-									<label for="nombre" class="form-label fw-semibold">Nombre</label>
-									<input type="text" class="form-control" id="nombre" placeholder="Tu nombre completo" required>
-								</div>
-								<div class="mb-3">
-									<label for="email" class="form-label fw-semibold">Correo electrónico</label>
-									<input type="email" class="form-control" id="email" placeholder="nombre@correo.com" required>
-								</div>
-								<div class="mb-3">
-									<label for="asunto" class="form-label fw-semibold">Asunto</label>
-									<input type="text" class="form-control" id="asunto" placeholder="Asunto de la consulta" required>
-								</div>
-								<div class="mb-3">
-									<label for="mensaje" class="form-label fw-semibold">Mensaje</label>
-									<textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
-								</div>
-								<button type="submit" class="btn w-100 fw-bold py-2 mt-2 text-white" style="background-color: #0000FF; border: none;">Enviar mensaje</button>
-							</form>
+							<form id="form-contacto" novalidate>
+						<div class="mb-3">
+							<label for="cont-nombre" class="form-label fw-semibold">Nombre <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="cont-nombre" placeholder="Nombre y apellido o nombre de empresa" required>
+							<div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+						</div>
+						<div class="mb-3">
+							<label for="cont-email" class="form-label fw-semibold">Correo electrónico <span class="text-danger">*</span></label>
+							<input type="email" class="form-control" id="cont-email" placeholder="nombre@correo.com" required>
+							<div class="invalid-feedback">Por favor ingresa un correo válido.</div>
+						</div>
+						<div class="mb-3">
+							<label for="cont-asunto" class="form-label fw-semibold">Asunto <span class="text-danger">*</span></label>
+							<input type="text" class="form-control" id="cont-asunto" placeholder="Asunto de la consulta (mín. 20 caracteres)" maxlength="100" required>
+							<div class="invalid-feedback">Por favor ingresa el asunto.</div>
+							<div class="form-text text-end">
+								<span id="cont-asunto-contador">0</span> / 100 caracteres
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="cont-mensaje" class="form-label fw-semibold">Mensaje <span class="text-danger">*</span></label>
+							<textarea class="form-control" id="cont-mensaje" rows="4" placeholder="Escribe tu mensaje aquí (mín. 20 caracteres)..." maxlength="1000" required></textarea>
+							<div class="invalid-feedback">Por favor escribe tu mensaje.</div>
+							<div class="form-text text-end">
+								<span id="cont-mensaje-contador">0</span> / 1000 caracteres
+							</div>
+						</div>
+							<button type="submit" id="btn-contacto" class="btn w-100 fw-bold py-2 mt-2 text-white" style="background-color: #0000FF; border: none;">Enviar mensaje</button>
+							<div id="cont-confirmacion" class="alert alert-success mt-3 text-center fw-semibold" style="display:none;" role="alert">
+								✅ ¡Mensaje enviado! Nos pondremos en contacto contigo pronto.
+							</div>
+						</form>
 						</div>
 					</div>
 				</div>

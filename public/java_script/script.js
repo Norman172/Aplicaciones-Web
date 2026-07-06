@@ -900,3 +900,282 @@ camposTexto.forEach(function (campo) {
 });
 
 actualizarBotonEnviar();
+
+var formContacto       = document.getElementById("form-contacto");
+var contNombre         = document.getElementById("cont-nombre");
+var contEmail          = document.getElementById("cont-email");
+var contAsunto         = document.getElementById("cont-asunto");
+var contMensaje        = document.getElementById("cont-mensaje");
+var contConfirmacion   = document.getElementById("cont-confirmacion");
+var btnContacto        = document.getElementById("btn-contacto");
+var contAsuntoContador = document.getElementById("cont-asunto-contador");
+var contMensajeContador = document.getElementById("cont-mensaje-contador");
+var contactoTocado     = false;
+
+var CONT_ASUNTO_MIN  = 20;
+var CONT_ASUNTO_MAX  = 100;
+var CONT_MENSAJE_MIN = 20;
+var CONT_MENSAJE_MAX = 1000;
+
+function contMarcarValido(campo) {
+  campo.classList.remove("is-invalid");
+  campo.classList.add("is-valid");
+  var feedback = campo.parentNode.querySelector(".invalid-feedback");
+  if (feedback) feedback.style.display = "none";
+}
+
+function contMarcarInvalido(campo, mensaje) {
+  campo.classList.remove("is-valid");
+  campo.classList.add("is-invalid");
+  var feedback = campo.parentNode.querySelector(".invalid-feedback");
+  if (feedback) {
+    feedback.textContent = mensaje;
+    feedback.style.display = "block";
+  }
+}
+
+function contValidarNombre() {
+  var valor = contNombre.value.trim();
+  if (valor === "") {
+    contMarcarInvalido(contNombre, "El nombre es obligatorio.");
+    return false;
+  }
+  if (valor.length < MIN_NOMBRE_TOTAL) {
+    contMarcarInvalido(contNombre, "Debe tener al menos " + MIN_NOMBRE_TOTAL + " caracteres.");
+    return false;
+  }
+  if (!REGEX_NOMBRE_EMPRESA.test(valor)) {
+    contMarcarInvalido(contNombre, "Contiene caracteres no permitidos.");
+    return false;
+  }
+  var esNombrePersonal = REGEX_SOLO_LETRAS.test(valor);
+  if (esNombrePersonal) {
+    var palabras = valor.split(/\s+/).filter(function (p) { return p.length > 0; });
+    if (palabras.length < 2) {
+      contMarcarInvalido(contNombre, "Ingresa nombre y apellido, o el nombre de tu empresa.");
+      return false;
+    }
+  }
+  contMarcarValido(contNombre);
+  return true;
+}
+
+function contValidarEmail() {
+  var valor = contEmail.value.trim();
+  if (valor === "") {
+    contMarcarInvalido(contEmail, "El correo electrónico es obligatorio.");
+    return false;
+  }
+  if (!REGEX_EMAIL.test(valor)) {
+    contMarcarInvalido(contEmail, "Ingresa un correo electrónico válido (ej: nombre@correo.com).");
+    return false;
+  }
+  contMarcarValido(contEmail);
+  return true;
+}
+
+function contValidarAsunto() {
+  var valor = contAsunto.value.trim();
+  var longitud = valor.length;
+  if (valor === "") {
+    contMarcarInvalido(contAsunto, "El asunto es obligatorio.");
+    return false;
+  }
+  if (longitud < CONT_ASUNTO_MIN) {
+    contMarcarInvalido(contAsunto, "El asunto debe tener al menos " + CONT_ASUNTO_MIN + " caracteres (" + longitud + "/" + CONT_ASUNTO_MIN + ").");
+    return false;
+  }
+  contMarcarValido(contAsunto);
+  return true;
+}
+
+function contValidarMensaje() {
+  var valor = contMensaje.value.trim();
+  var longitud = valor.length;
+  if (valor === "") {
+    contMarcarInvalido(contMensaje, "El mensaje es obligatorio.");
+    return false;
+  }
+  if (longitud < CONT_MENSAJE_MIN) {
+    contMarcarInvalido(contMensaje, "El mensaje debe tener al menos " + CONT_MENSAJE_MIN + " caracteres (" + longitud + "/" + CONT_MENSAJE_MIN + ").");
+    return false;
+  }
+  contMarcarValido(contMensaje);
+  return true;
+}
+
+function actualizarContadorAsunto() {
+  var cantidad = contAsunto.value.length;
+  if (cantidad > CONT_ASUNTO_MAX) {
+    contAsunto.value = contAsunto.value.substring(0, CONT_ASUNTO_MAX);
+    cantidad = CONT_ASUNTO_MAX;
+  }
+  contAsuntoContador.textContent = cantidad;
+  if (cantidad >= CONT_ASUNTO_MAX * 0.9) {
+    contAsuntoContador.style.color = "#dc3545";
+    contAsuntoContador.style.fontWeight = "700";
+  } else if (cantidad >= CONT_ASUNTO_MIN) {
+    contAsuntoContador.style.color = "#198754";
+    contAsuntoContador.style.fontWeight = "600";
+  } else if (cantidad > 0) {
+    contAsuntoContador.style.color = "#fd7e14";
+    contAsuntoContador.style.fontWeight = "600";
+  } else {
+    contAsuntoContador.style.color = "";
+    contAsuntoContador.style.fontWeight = "";
+  }
+}
+
+function actualizarContadorMensaje() {
+  var cantidad = contMensaje.value.length;
+  if (cantidad > CONT_MENSAJE_MAX) {
+    contMensaje.value = contMensaje.value.substring(0, CONT_MENSAJE_MAX);
+    cantidad = CONT_MENSAJE_MAX;
+  }
+  contMensajeContador.textContent = cantidad;
+  if (cantidad >= CONT_MENSAJE_MAX * 0.9) {
+    contMensajeContador.style.color = "#dc3545";
+    contMensajeContador.style.fontWeight = "700";
+  } else if (cantidad >= CONT_MENSAJE_MIN) {
+    contMensajeContador.style.color = "#198754";
+    contMensajeContador.style.fontWeight = "600";
+  } else if (cantidad > 0) {
+    contMensajeContador.style.color = "#fd7e14";
+    contMensajeContador.style.fontWeight = "600";
+  } else {
+    contMensajeContador.style.color = "";
+    contMensajeContador.style.fontWeight = "";
+  }
+}
+
+function actualizarBtnContacto() {
+  var nombreTrim = contNombre.value.trim();
+  var nombreOk = nombreTrim.length >= MIN_NOMBRE_TOTAL && REGEX_NOMBRE_EMPRESA.test(nombreTrim);
+  if (nombreOk && REGEX_SOLO_LETRAS.test(nombreTrim)) {
+    var palabrasNombre = nombreTrim.split(/\s+/).filter(function (p) { return p.length > 0; });
+    nombreOk = palabrasNombre.length >= 2;
+  }
+  var emailOk   = REGEX_EMAIL.test(contEmail.value.trim());
+  var asuntoOk  = contAsunto.value.trim().length >= CONT_ASUNTO_MIN && contAsunto.value.trim().length <= CONT_ASUNTO_MAX;
+  var mensajeOk = contMensaje.value.trim().length >= CONT_MENSAJE_MIN && contMensaje.value.trim().length <= CONT_MENSAJE_MAX;
+  var todosOk   = nombreOk && emailOk && asuntoOk && mensajeOk;
+
+  btnContacto.disabled = !todosOk;
+  btnContacto.style.opacity = todosOk ? "1" : "0.6";
+  btnContacto.style.cursor = todosOk ? "pointer" : "not-allowed";
+}
+
+contNombre.addEventListener("input", function () {
+  if (contactoTocado || this.value.trim().length > 0) contValidarNombre();
+  actualizarBtnContacto();
+});
+contNombre.addEventListener("blur", function () {
+  contactoTocado = true;
+  contValidarNombre();
+  actualizarBtnContacto();
+});
+
+contEmail.addEventListener("input", function () {
+  var valor = this.value.trim();
+  if (valor === "") {
+    if (contactoTocado) contMarcarInvalido(contEmail, "El correo electrónico es obligatorio.");
+  } else if (REGEX_EMAIL.test(valor)) {
+    contMarcarValido(contEmail);
+  } else {
+    contMarcarInvalido(contEmail, "Ingresa un correo electrónico válido (ej: nombre@correo.com).");
+  }
+  actualizarBtnContacto();
+});
+contEmail.addEventListener("blur", function () {
+  contactoTocado = true;
+  contValidarEmail();
+  actualizarBtnContacto();
+});
+
+contAsunto.addEventListener("input", function () {
+  actualizarContadorAsunto();
+  if (contactoTocado || this.value.trim().length > 0) contValidarAsunto();
+  actualizarBtnContacto();
+});
+contAsunto.addEventListener("blur", function () {
+  contactoTocado = true;
+  contValidarAsunto();
+  actualizarBtnContacto();
+});
+
+contMensaje.addEventListener("input", function () {
+  actualizarContadorMensaje();
+  if (contactoTocado || this.value.trim().length > 0) contValidarMensaje();
+  actualizarBtnContacto();
+});
+contMensaje.addEventListener("blur", function () {
+  contactoTocado = true;
+  contValidarMensaje();
+  actualizarBtnContacto();
+});
+
+formContacto.addEventListener("submit", function (evento) {
+  evento.preventDefault();
+  contactoTocado = true;
+
+  var v1 = contValidarNombre();
+  var v2 = contValidarEmail();
+  var v3 = contValidarAsunto();
+  var v4 = contValidarMensaje();
+
+  if (!v1 || !v2 || !v3 || !v4) {
+    var primerInvalido = formContacto.querySelector(".is-invalid");
+    if (primerInvalido) {
+      primerInvalido.scrollIntoView({ behavior: "smooth", block: "center" });
+      primerInvalido.focus();
+    }
+    return;
+  }
+
+  console.log("Contacto - Nombre:", contNombre.value.trim());
+  console.log("Contacto - Email:", contEmail.value.trim());
+  console.log("Contacto - Asunto:", contAsunto.value.trim());
+  console.log("Contacto - Mensaje:", contMensaje.value.trim());
+
+  contConfirmacion.style.display = "block";
+  contConfirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  formContacto.reset();
+  var camposContacto = formContacto.querySelectorAll(".form-control");
+  camposContacto.forEach(function (c) {
+    c.classList.remove("is-valid", "is-invalid");
+  });
+  contAsuntoContador.textContent = "0";
+  contAsuntoContador.style.color = "";
+  contAsuntoContador.style.fontWeight = "";
+  contMensajeContador.textContent = "0";
+  contMensajeContador.style.color = "";
+  contMensajeContador.style.fontWeight = "";
+  contactoTocado = false;
+  btnContacto.disabled = true;
+  btnContacto.style.opacity = "0.6";
+  btnContacto.style.cursor = "not-allowed";
+
+  setTimeout(function () {
+    contConfirmacion.style.display = "none";
+  }, 5000);
+});
+
+var camposContactoFocus = formContacto.querySelectorAll(".form-control");
+camposContactoFocus.forEach(function (campo) {
+  campo.addEventListener("focus", function () {
+    if (!this.classList.contains("is-invalid")) {
+      this.style.borderColor = "#0000FF";
+      this.style.boxShadow = "0 0 0 0.2rem rgba(0, 0, 255, 0.20)";
+    }
+  });
+  campo.addEventListener("blur", function () {
+    if (!this.classList.contains("is-valid") && !this.classList.contains("is-invalid")) {
+      this.style.borderColor = "";
+      this.style.boxShadow = "";
+    }
+  });
+});
+
+actualizarBtnContacto();
+
