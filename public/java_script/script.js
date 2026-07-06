@@ -702,6 +702,8 @@ function limpiarEstadosValidacion() {
     f.style.display = "none";
   });
   plazoError.style.display = "none";
+  var alertaCot = formCotizacion.querySelector(".alert-danger");
+  if (alertaCot) alertaCot.remove();
   contadorChars.textContent = "0";
   contadorChars.style.color = "";
   contadorChars.style.fontWeight = "";
@@ -810,6 +812,12 @@ formCotizacion.addEventListener("submit", function (evento) {
   var v7 = validarDescripcion();
 
   if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !v7) {
+    var alertaAnterior = formCotizacion.querySelector(".alert-danger");
+    if (alertaAnterior) alertaAnterior.remove();
+    var alertaError = document.createElement("div");
+    alertaError.className = "alert alert-danger mt-3 fw-semibold text-center";
+    alertaError.textContent = "⚠️ Por favor corrige los campos marcados en rojo antes de enviar.";
+    btnCotizar.parentNode.insertBefore(alertaError, btnCotizar.parentNode.nextSibling);
     var primerInvalido = formCotizacion.querySelector(".is-invalid");
     if (primerInvalido) {
       primerInvalido.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -817,6 +825,9 @@ formCotizacion.addEventListener("submit", function (evento) {
     }
     return;
   }
+
+  var alertaDanger = formCotizacion.querySelector(".alert-danger");
+  if (alertaDanger) alertaDanger.remove();
 
   var nombre      = campoNombre.value.trim();
   var email       = campoEmail.value.trim();
@@ -1124,6 +1135,12 @@ formContacto.addEventListener("submit", function (evento) {
   var v4 = contValidarMensaje();
 
   if (!v1 || !v2 || !v3 || !v4) {
+    var alertaAnterior = formContacto.querySelector(".alert-danger");
+    if (alertaAnterior) alertaAnterior.remove();
+    var alertaError = document.createElement("div");
+    alertaError.className = "alert alert-danger mt-3 fw-semibold text-center";
+    alertaError.textContent = "⚠️ Por favor corrige los campos marcados en rojo antes de enviar.";
+    btnContacto.parentNode.insertBefore(alertaError, btnContacto.nextSibling);
     var primerInvalido = formContacto.querySelector(".is-invalid");
     if (primerInvalido) {
       primerInvalido.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -1131,6 +1148,9 @@ formContacto.addEventListener("submit", function (evento) {
     }
     return;
   }
+
+  var alertaDanger = formContacto.querySelector(".alert-danger");
+  if (alertaDanger) alertaDanger.remove();
 
   console.log("Contacto - Nombre:", contNombre.value.trim());
   console.log("Contacto - Email:", contEmail.value.trim());
