@@ -870,6 +870,12 @@ formCotizacion.addEventListener("submit", function (evento) {
     resumen.appendChild(fila);
   });
 
+  var btnEliminar = document.createElement("button");
+  btnEliminar.textContent = "Eliminar";
+  btnEliminar.className = "btn btn-outline-danger btn-sm mt-2";
+  btnEliminar.setAttribute("data-servicio", servicio);
+  resumen.appendChild(btnEliminar);
+
   resumen.insertBefore(tituloResumen, resumen.firstChild);
 
   formCotizacion.parentNode.insertBefore(resumen, formCotizacion.nextSibling);
@@ -886,6 +892,16 @@ formCotizacion.addEventListener("submit", function (evento) {
 
   resumen.parentNode.insertBefore(mensajeExito, resumen.nextSibling);
   mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  btnEliminar.addEventListener("click", function () {
+    var serv = this.getAttribute("data-servicio");
+    if (contadorServicios[serv] > 0) {
+      contadorServicios[serv] = contadorServicios[serv] - 1;
+    }
+    renderContador();
+    if (mensajeExito.parentNode) mensajeExito.remove();
+    resumen.remove();
+  });
 });
 
 var camposTexto = document.querySelectorAll(
