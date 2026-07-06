@@ -412,62 +412,321 @@ cards.forEach(function (card) {
 });
 
 const formCotizacion   = document.getElementById("form-cotizacion");
+const campoNombre      = document.getElementById("cot-nombre");
+const campoEmail       = document.getElementById("cot-email");
+const campoEmpresa     = document.getElementById("cot-empresa");
+const campoServicio    = document.getElementById("cot-servicio");
+const campoPresupuesto = document.getElementById("cot-presupuesto");
 const campoDescripcion = document.getElementById("cot-descripcion");
 const contadorChars    = document.getElementById("cot-contador");
 const plazoError       = document.getElementById("plazo-error");
 const confirmacion     = document.getElementById("cot-confirmacion");
 const btnCotizar       = document.getElementById("btn-cotizar");
 const btnLimpiar       = document.getElementById("btn-limpiar");
+const radiosPlayzo     = document.querySelectorAll("input[name='cot-plazo']");
 
-const MAX_CHARS = 500;
+const MAX_CHARS     = 500;
+const MIN_CHARS_DESC = 20;
+const MIN_NOMBRE     = 3;
+const MIN_NOMBRE_TOTAL = 5;
+const REGEX_EMAIL    = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+const REGEX_SOLO_LETRAS = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$/;
+const REGEX_NOMBRE_EMPRESA = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑüÜ\s.&\-,()]+$/;
 
-btnLimpiar.addEventListener("click", function () {
-  document.getElementById("form-cotizacion").reset();
-  limpiarErrores();
-  contadorChars.textContent = "0";
-});
+var formularioTocado = false;
 
-campoDescripcion.addEventListener("input", function () {
-  const cantidad = this.value.length;
+function marcarValido(campo) {
+  campo.classList.remove("is-invalid");
+  campo.classList.add("is-valid");
+  var feedback = campo.parentNode.querySelector(".invalid-feedback");
+  if (feedback) feedback.style.display = "none";
+  var errorSpan = campo.parentNode.querySelector(".error-campo");
+  if (errorSpan) errorSpan.remove();
+}
+
+function marcarInvalido(campo, mensaje) {
+  campo.classList.remove("is-valid");
+  campo.classList.add("is-invalid");
+  var feedback = campo.parentNode.querySelector(".invalid-feedback");
+  if (feedback) {
+    feedback.textContent = mensaje;
+    feedback.style.display = "block";
+  }
+  var errorAnterior = campo.parentNode.querySelector(".error-campo");
+  if (errorAnterior) errorAnterior.remove();
+}
+
+function marcarNeutro(campo) {
+  campo.classList.remove("is-valid", "is-invalid");
+  var feedback = campo.parentNode.querySelector(".invalid-feedback");
+  if (feedback) feedback.style.display = "none";
+  var errorSpan = campo.parentNode.querySelector(".error-campo");
+  if (errorSpan) errorSpan.remove();
+}
+
+function validarNombre() {
+  var valor = campoNombre.value.trim();
+  if (valor === "") {
+    marcarInvalido(campoNombre, "El nombre es obligatorio.");
+    return false;
+  }
+  if (valor.length < MIN_NOMBRE_TOTAL) {
+    marcarInvalido(campoNombre, "Debe tener al menos " + MIN_NOMBRE_TOTAL + " caracteres.");
+    return false;
+  }
+  if (!REGEX_NOMBRE_EMPRESA.test(valor)) {
+    marcarInvalido(campoNombre, "Contiene caracteres no permitidos.");
+    return false;
+  }
+  var esNombrePersonal = REGEX_SOLO_LETRAS.test(valor);
+  if (esNombrePersonal) {
+    var palabras = valor.split(/\s+/).filter(function (p) { return p.length > 0; });
+    if (palabras.length < 2) {
+      marcarInvalido(campoNombre, "Ingresa nombre y apellido, o el nombre de tu empresa.");
+      return false;
+    }
+  }
+  marcarValido(campoNombre);
+  return true;
+}
+
+function validarEmail() {
+  var valor = campoEmail.value.trim();
+  if (valor === "") {
+    marcarInvalido(campoEmail, "El correo electrónico es obligatorio.");
+    return false;
+  }
+  if (!REGEX_EMAIL.test(valor)) {
+    marcarInvalido(campoEmail, "Ingresa un correo electrónico válido (ej: nombre@correo.com).");
+    return false;
+  }
+  marcarValido(campoEmail);
+  return true;
+}
+
+function validarEmpresa() {
+  var valor = campoEmpresa.value.trim();
+  if (valor === "") {
+    marcarNeutro(campoEmpresa);
+    return true;
+  }
+  if (valor.length < 2) {
+    marcarInvalido(campoEmpresa, "El nombre de la empresa debe tener al menos 2 caracteres.");
+    return false;
+  }
+  marcarValido(campoEmpresa);
+  return true;
+}
+
+function validarServicio() {
+  if (campoServicio.value === "") {
+    marcarInvalido(campoServicio, "Selecciona un servicio de interés.");
+    return false;
+  }
+  marcarValido(campoServicio);
+  return true;
+}
+
+function validarPresupuesto() {
+  if (campoPresupuesto.value === "") {
+    marcarInvalido(campoPresupuesto, "Selecciona un rango de presupuesto.");
+    return false;
+  }
+  marcarValido(campoPresupuesto);
+  return true;
+}
+
+function validarPlazo() {
+  var alguno = Array.from(radiosPlayzo).some(function (r) { return r.checked; });
+  if (!alguno) {
+    plazoError.style.display = "block";
+    plazoError.textContent = "Selecciona un plazo deseado.";
+    radiosPlayzo.forEach(function (r) {
+      r.classList.add("is-invalid");
+    });
+    return false;
+  }
+  plazoError.style.display = "none";
+  radiosPlayzo.forEach(function (r) {
+    r.classList.remove("is-invalid");
+    r.classList.add("is-valid");
+  });
+  return true;
+}
+
+function validarDescripcion() {
+  var valor = campoDescripcion.value.trim();
+  var longitud = valor.length;
+  if (valor === "") {
+    marcarInvalido(campoDescripcion, "La descripción del proyecto es obligatoria.");
+    return false;
+  }
+  if (longitud < MIN_CHARS_DESC) {
+    marcarInvalido(campoDescripcion, "La descripción debe tener al menos " + MIN_CHARS_DESC + " caracteres (" + longitud + "/" + MIN_CHARS_DESC + ").");
+    return false;
+  }
+  marcarValido(campoDescripcion);
+  return true;
+}
+
+function actualizarContador() {
+  var cantidad = campoDescripcion.value.length;
 
   if (cantidad > MAX_CHARS) {
-    this.value = this.value.substring(0, MAX_CHARS);
+    campoDescripcion.value = campoDescripcion.value.substring(0, MAX_CHARS);
+    cantidad = MAX_CHARS;
   }
 
-  contadorChars.textContent = Math.min(cantidad, MAX_CHARS);
+  contadorChars.textContent = cantidad;
 
   if (cantidad >= MAX_CHARS * 0.9) {
-    contadorChars.style.color = "#cc0000";
+    contadorChars.style.color = "#dc3545";
     contadorChars.style.fontWeight = "700";
+  } else if (cantidad >= MIN_CHARS_DESC) {
+    contadorChars.style.color = "#198754";
+    contadorChars.style.fontWeight = "600";
+  } else if (cantidad > 0) {
+    contadorChars.style.color = "#fd7e14";
+    contadorChars.style.fontWeight = "600";
   } else {
     contadorChars.style.color = "";
     contadorChars.style.fontWeight = "";
   }
-});
-
-function validarPlazo() {
-  const radios = document.querySelectorAll("input[name='cot-plazo']");
-  const alguno = Array.from(radios).some(function (r) { return r.checked; });
-  plazoError.style.display = alguno ? "none" : "block";
-  return alguno;
 }
 
-document.querySelectorAll("input[name='cot-plazo']").forEach(function (radio) {
+function actualizarBotonEnviar() {
+  var nombreTrim = campoNombre.value.trim();
+  var nombreOk = nombreTrim.length >= MIN_NOMBRE_TOTAL && REGEX_NOMBRE_EMPRESA.test(nombreTrim);
+  if (nombreOk && REGEX_SOLO_LETRAS.test(nombreTrim)) {
+    var palabrasNombre = nombreTrim.split(/\s+/).filter(function (p) { return p.length > 0; });
+    nombreOk = palabrasNombre.length >= 2;
+  }
+  var emailOk       = REGEX_EMAIL.test(campoEmail.value.trim());
+  var servicioOk    = campoServicio.value !== "";
+  var presupuestoOk = campoPresupuesto.value !== "";
+  var plazoOk       = Array.from(radiosPlayzo).some(function (r) { return r.checked; });
+  var descripcionOk = campoDescripcion.value.trim().length >= MIN_CHARS_DESC;
+
+  var todosValidos = nombreOk && emailOk && servicioOk && presupuestoOk && plazoOk && descripcionOk;
+
+  btnCotizar.disabled = !todosValidos;
+
+  if (todosValidos) {
+    btnCotizar.style.opacity = "1";
+    btnCotizar.style.cursor = "pointer";
+  } else {
+    btnCotizar.style.opacity = "0.6";
+    btnCotizar.style.cursor = "not-allowed";
+  }
+}
+
+campoNombre.addEventListener("input", function () {
+  if (formularioTocado || this.value.trim().length > 0) {
+    validarNombre();
+  }
+  actualizarBotonEnviar();
+});
+
+campoNombre.addEventListener("blur", function () {
+  formularioTocado = true;
+  validarNombre();
+  actualizarBotonEnviar();
+});
+
+campoEmail.addEventListener("input", function () {
+  var valor = this.value.trim();
+  if (valor === "") {
+    if (formularioTocado) marcarInvalido(campoEmail, "El correo electrónico es obligatorio.");
+  } else if (REGEX_EMAIL.test(valor)) {
+    marcarValido(campoEmail);
+  } else {
+    marcarInvalido(campoEmail, "Ingresa un correo electrónico válido (ej: nombre@correo.com).");
+  }
+  actualizarBotonEnviar();
+});
+
+campoEmail.addEventListener("blur", function () {
+  formularioTocado = true;
+  validarEmail();
+  actualizarBotonEnviar();
+});
+
+campoEmpresa.addEventListener("input", function () {
+  validarEmpresa();
+});
+
+campoEmpresa.addEventListener("blur", function () {
+  validarEmpresa();
+});
+
+campoServicio.addEventListener("change", function () {
+  validarServicio();
+  actualizarBotonEnviar();
+});
+
+campoPresupuesto.addEventListener("change", function () {
+  validarPresupuesto();
+  actualizarBotonEnviar();
+});
+
+radiosPlayzo.forEach(function (radio) {
   radio.addEventListener("change", function () {
-    plazoError.style.display = "none";
+    validarPlazo();
+    actualizarBotonEnviar();
   });
 });
 
+campoDescripcion.addEventListener("input", function () {
+  actualizarContador();
+  if (formularioTocado || this.value.trim().length > 0) {
+    validarDescripcion();
+  }
+  actualizarBotonEnviar();
+});
+
+campoDescripcion.addEventListener("blur", function () {
+  formularioTocado = true;
+  validarDescripcion();
+  actualizarBotonEnviar();
+});
+
+function limpiarEstadosValidacion() {
+  var todosLosCampos = formCotizacion.querySelectorAll(".form-control, .form-select, .form-check-input");
+  todosLosCampos.forEach(function (campo) {
+    campo.classList.remove("is-valid", "is-invalid");
+  });
+  formCotizacion.querySelectorAll(".error-campo").forEach(function (e) {
+    e.remove();
+  });
+  formCotizacion.querySelectorAll(".invalid-feedback").forEach(function (f) {
+    f.style.display = "none";
+  });
+  plazoError.style.display = "none";
+  contadorChars.textContent = "0";
+  contadorChars.style.color = "";
+  contadorChars.style.fontWeight = "";
+  formularioTocado = false;
+  btnCotizar.disabled = true;
+  btnCotizar.style.opacity = "0.6";
+  btnCotizar.style.cursor = "not-allowed";
+}
+
+btnLimpiar.addEventListener("click", function () {
+  formCotizacion.reset();
+  limpiarEstadosValidacion();
+});
+
 function mostrarError(idCampo, mensaje) {
-  const campo = document.getElementById(idCampo);
-  const error = document.createElement("span");
+  var campo = document.getElementById(idCampo);
+  if (!campo) return;
+  var errorAnterior = campo.parentNode.querySelector(".error-campo");
+  if (errorAnterior) errorAnterior.remove();
+
+  var error = document.createElement("span");
   error.className = "error-campo text-danger small d-block mt-1";
-
-  const icono = document.createElement("span");
+  var icono = document.createElement("span");
   icono.textContent = "⚠️ ";
-
-  const texto = document.createTextNode(mensaje);
-
+  var texto = document.createTextNode(mensaje);
   error.appendChild(icono);
   error.appendChild(texto);
   campo.parentNode.appendChild(error);
@@ -479,7 +738,7 @@ function limpiarErrores() {
   });
 }
 
-const nombresServicios = {
+var nombresServicios = {
   software:   "Desarrollo de software a medida",
   web:        "Aplicaciones web modernas y responsivas",
   gestion:    "Diseño de plataformas de gestión",
@@ -487,7 +746,7 @@ const nombresServicios = {
   otro:       "Otro / No estoy seguro",
 };
 
-const contadorServicios = {
+var contadorServicios = {
   software:   0,
   web:        0,
   gestion:    0,
@@ -496,38 +755,38 @@ const contadorServicios = {
 };
 
 function renderContador() {
-  let panel = document.getElementById("panel-contador");
+  var panel = document.getElementById("panel-contador");
 
   if (!panel) {
     panel = document.createElement("div");
     panel.id = "panel-contador";
     panel.className = "bg-white border border-2 border-primary rounded-3 p-4 mt-4 shadow-sm";
 
-    const titulo = document.createElement("h4");
+    var titulo = document.createElement("h4");
     titulo.textContent = "Solicitudes por servicio";
     titulo.className = "text-primary fw-bold mb-3 h6";
     panel.appendChild(titulo);
 
-    const tabla = document.createElement("table");
+    var tabla = document.createElement("table");
     tabla.id = "tabla-contador";
     tabla.className = "table table-sm table-borderless mb-0";
     panel.appendChild(tabla);
 
-    const cardForm = document.querySelector(".card.border-0.shadow");
+    var cardForm = document.querySelector("#cotizacion .card.border-0.shadow");
     cardForm.appendChild(panel);
   }
 
-  const tabla = document.getElementById("tabla-contador");
+  var tabla = document.getElementById("tabla-contador");
   tabla.innerHTML = "";
 
   Object.keys(contadorServicios).forEach(function (clave) {
-    const fila = document.createElement("tr");
+    var fila = document.createElement("tr");
 
-    const tdNombre = document.createElement("td");
+    var tdNombre = document.createElement("td");
     tdNombre.textContent = nombresServicios[clave];
     tdNombre.className = "border-bottom py-2 text-dark";
 
-    const tdCount = document.createElement("td");
+    var tdCount = document.createElement("td");
     tdCount.textContent = contadorServicios[clave];
     tdCount.className = "border-bottom py-2 fw-bold text-primary text-end";
 
@@ -537,29 +796,35 @@ function renderContador() {
   });
 }
 
-document.getElementById("form-cotizacion").addEventListener("submit", function (evento) {
+formCotizacion.addEventListener("submit", function (evento) {
   evento.preventDefault();
-
+  formularioTocado = true;
   limpiarErrores();
 
-  const nombre      = document.getElementById("cot-nombre").value.trim();
-  const email       = document.getElementById("cot-email").value.trim();
-  const servicio    = document.getElementById("cot-servicio").value;
-  const presupuesto = document.getElementById("cot-presupuesto").value;
-  const descripcion = document.getElementById("cot-descripcion").value.trim();
-  const plazoRadio  = document.querySelector("input[name='cot-plazo']:checked");
-  const plazo       = plazoRadio ? plazoRadio.value : "";
+  var v1 = validarNombre();
+  var v2 = validarEmail();
+  var v3 = validarEmpresa();
+  var v4 = validarServicio();
+  var v5 = validarPresupuesto();
+  var v6 = validarPlazo();
+  var v7 = validarDescripcion();
 
-  let valido = true;
+  if (!v1 || !v2 || !v3 || !v4 || !v5 || !v6 || !v7) {
+    var primerInvalido = formCotizacion.querySelector(".is-invalid");
+    if (primerInvalido) {
+      primerInvalido.scrollIntoView({ behavior: "smooth", block: "center" });
+      primerInvalido.focus();
+    }
+    return;
+  }
 
-  if (nombre === "")     { mostrarError("cot-nombre",      "Campo vacío"); valido = false; }
-  if (email === "")      { mostrarError("cot-email",       "Campo vacío"); valido = false; }
-  if (servicio === "")   { mostrarError("cot-servicio",    "Campo vacío"); valido = false; }
-  if (presupuesto === "") { mostrarError("cot-presupuesto", "Campo vacío"); valido = false; }
-  if (descripcion === "") { mostrarError("cot-descripcion", "Campo vacío"); valido = false; }
-  if (plazo === "")      { mostrarError("cot-plazo-group", "Campo vacío"); valido = false; }
-
-  if (!valido) return;
+  var nombre      = campoNombre.value.trim();
+  var email       = campoEmail.value.trim();
+  var servicio    = campoServicio.value;
+  var presupuesto = campoPresupuesto.value;
+  var descripcion = campoDescripcion.value.trim();
+  var plazoRadio  = document.querySelector("input[name='cot-plazo']:checked");
+  var plazo       = plazoRadio ? plazoRadio.value : "";
 
   console.log("Nombre:",      nombre);
   console.log("Email:",       email);
@@ -568,14 +833,14 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   console.log("Plazo:",       plazo);
   console.log("Descripción:", descripcion);
 
-  const resumen = document.createElement("div");
+  var resumen = document.createElement("div");
   resumen.className = "alert alert-light border border-start-0 border-end-0 border-top-0 border-bottom-0 border-start border-4 border-primary shadow-sm mt-4 p-3 text-dark";
 
-  const tituloResumen = document.createElement("p");
+  var tituloResumen = document.createElement("p");
   tituloResumen.textContent = "Resumen de tu solicitud:";
   tituloResumen.className = "fw-bold mb-2 text-primary";
 
-  const campos = [
+  var campos = [
     { etiqueta: "Nombre",      valor: nombre },
     { etiqueta: "Email",       valor: email },
     { etiqueta: "Servicio",    valor: servicio },
@@ -585,9 +850,9 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   ];
 
   campos.forEach(function (c) {
-    const fila = document.createElement("p");
+    var fila = document.createElement("p");
     fila.className = "mb-1 small";
-    const etiqueta = document.createElement("strong");
+    var etiqueta = document.createElement("strong");
     etiqueta.textContent = c.etiqueta + ": ";
     fila.appendChild(etiqueta);
     fila.appendChild(document.createTextNode(c.valor));
@@ -596,13 +861,12 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
 
   resumen.insertBefore(tituloResumen, resumen.firstChild);
 
-  const formulario = document.getElementById("form-cotizacion");
-  formulario.parentNode.insertBefore(resumen, formulario.nextSibling);
+  formCotizacion.parentNode.insertBefore(resumen, formCotizacion.nextSibling);
 
-  formulario.reset();
-  contadorChars.textContent = "0";
+  formCotizacion.reset();
+  limpiarEstadosValidacion();
 
-  const mensajeExito = document.createElement("div");
+  var mensajeExito = document.createElement("div");
   mensajeExito.textContent = "\u2705 Env\u00edo de formulario exitoso.";
   mensajeExito.className = "alert alert-success mt-3 fw-bold text-center shadow-sm";
 
@@ -613,8 +877,7 @@ document.getElementById("form-cotizacion").addEventListener("submit", function (
   mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
 });
 
-
-const camposTexto = document.querySelectorAll(
+var camposTexto = document.querySelectorAll(
   "#form-cotizacion input[type='text'], " +
   "#form-cotizacion input[type='email'], " +
   "#form-cotizacion select, " +
@@ -623,11 +886,17 @@ const camposTexto = document.querySelectorAll(
 
 camposTexto.forEach(function (campo) {
   campo.addEventListener("focus", function () {
-    this.style.borderColor  = "#0000FF";
-    this.style.boxShadow    = "0 0 0 0.2rem rgba(0, 0, 255, 0.20)";
+    if (!this.classList.contains("is-invalid")) {
+      this.style.borderColor  = "#0000FF";
+      this.style.boxShadow    = "0 0 0 0.2rem rgba(0, 0, 255, 0.20)";
+    }
   });
   campo.addEventListener("blur", function () {
-    this.style.borderColor = "";
-    this.style.boxShadow   = "";
+    if (!this.classList.contains("is-valid") && !this.classList.contains("is-invalid")) {
+      this.style.borderColor = "";
+      this.style.boxShadow   = "";
+    }
   });
 });
+
+actualizarBotonEnviar();
