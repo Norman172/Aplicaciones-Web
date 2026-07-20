@@ -6,12 +6,11 @@ const datosProyecto = {
     parrafo1: "desarrollamos software, aplicaciones web y herramientas tecnológicas diseñadas para optimizar procesos, mejorar la productividad y acelerar el crecimiento de empresas y organizaciones.",
     parrafo2: "Combinamos innovación, tecnología y experiencia para ofrecer soluciones seguras, eficientes y adaptadas a las necesidades de cada cliente."
   },
-  contacto: {
-    email: "contacto@cibercore.com",
-    telefono: "+593 99 233 6174",
-    direccion: "11 de Noviembre y Ricardo Descalzi, Riobamba",
-    mapaUrl: "https://maps.google.com/?q=11+de+Noviembre+y+Ricardo+Descalzi,+Riobamba"
-  }
+  contacto: [
+    { tipo: "Correo electrónico", valor: "contacto@cibercore.com", url: "mailto:contacto@cibercore.com", icono: "📧" },
+    { tipo: "Teléfono", valor: "+593 99 233 6174", url: "tel:+593 99 233 6174", icono: "📞" },
+    { tipo: "Dirección", valor: "11 de Noviembre y Ricardo Descalzi, Riobamba", url: "https://maps.google.com/?q=11+de+Noviembre+y+Ricardo+Descalzi,+Riobamba", icono: "📍" }
+  ]
 };
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -28,26 +27,46 @@ document.addEventListener("DOMContentLoaded", function () {
   const presP2 = document.getElementById("presentacion-p2");
   if (presP2) presP2.textContent = datosProyecto.presentacion.parrafo2;
 
-  // Cargar datos de contacto
-  const enlaceEmail = document.getElementById("enlace-email");
-  const textoEmail = document.getElementById("texto-email");
-  if (enlaceEmail && textoEmail) {
-    enlaceEmail.href = "mailto:" + datosProyecto.contacto.email;
-    textoEmail.textContent = datosProyecto.contacto.email;
-  }
+  // Cargar datos de contacto como lista dinámica
+  const contactoLista = document.getElementById("contacto-lista");
+  if (contactoLista) {
+    const ul = document.createElement("ul");
+    ul.className = "list-unstyled mb-4";
+    
+    datosProyecto.contacto.forEach(item => {
+      const li = document.createElement("li");
+      li.className = "mb-3 d-flex align-items-center gap-3";
+      
+      const iconSpan = document.createElement("span");
+      iconSpan.className = "fs-4";
+      iconSpan.textContent = item.icono;
+      
+      const textDiv = document.createElement("div");
+      
+      const titulo = document.createElement("strong");
+      titulo.className = "d-block text-white";
+      titulo.textContent = item.tipo + ":";
+      
+      const enlace = document.createElement("a");
+      enlace.href = item.url;
+      enlace.className = "text-decoration-none";
+      enlace.style.color = "#DAE021";
+      enlace.textContent = item.valor;
+      
+      if(item.tipo === "Dirección") {
+          enlace.target = "_blank";
+          enlace.rel = "noopener noreferrer";
+      }
 
-  const enlaceTelefono = document.getElementById("enlace-telefono");
-  const textoTelefono = document.getElementById("texto-telefono");
-  if (enlaceTelefono && textoTelefono) {
-    enlaceTelefono.href = "tel:" + datosProyecto.contacto.telefono;
-    textoTelefono.textContent = datosProyecto.contacto.telefono;
-  }
-
-  const enlaceDireccion = document.getElementById("enlace-direccion");
-  const textoDireccion = document.getElementById("texto-direccion");
-  if (enlaceDireccion && textoDireccion) {
-    enlaceDireccion.href = datosProyecto.contacto.mapaUrl;
-    textoDireccion.textContent = datosProyecto.contacto.direccion;
+      textDiv.appendChild(titulo);
+      textDiv.appendChild(enlace);
+      
+      li.appendChild(iconSpan);
+      li.appendChild(textDiv);
+      ul.appendChild(li);
+    });
+    
+    contactoLista.appendChild(ul);
   }
 });
 
