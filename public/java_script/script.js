@@ -1,3 +1,56 @@
+// ====== DATOS DEL PROYECTO ======
+const datosProyecto = {
+  nombre: "CIBERCORE",
+  presentacion: {
+    titulo: "Presentación del proyecto",
+    parrafo1: "desarrollamos software, aplicaciones web y herramientas tecnológicas diseñadas para optimizar procesos, mejorar la productividad y acelerar el crecimiento de empresas y organizaciones.",
+    parrafo2: "Combinamos innovación, tecnología y experiencia para ofrecer soluciones seguras, eficientes y adaptadas a las necesidades de cada cliente."
+  },
+  contacto: {
+    email: "contacto@cibercore.com",
+    telefono: "+593 99 233 6174",
+    direccion: "11 de Noviembre y Ricardo Descalzi, Riobamba",
+    mapaUrl: "https://maps.google.com/?q=11+de+Noviembre+y+Ricardo+Descalzi,+Riobamba"
+  }
+};
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Cargar datos de presentación
+  const presTitulo = document.getElementById("presentacion-titulo");
+  if (presTitulo) presTitulo.textContent = datosProyecto.presentacion.titulo;
+
+  const presNombre = document.getElementById("presentacion-nombre");
+  if (presNombre) presNombre.textContent = datosProyecto.nombre;
+
+  const presP1 = document.getElementById("presentacion-p1");
+  if (presP1) presP1.textContent = datosProyecto.presentacion.parrafo1;
+
+  const presP2 = document.getElementById("presentacion-p2");
+  if (presP2) presP2.textContent = datosProyecto.presentacion.parrafo2;
+
+  // Cargar datos de contacto
+  const enlaceEmail = document.getElementById("enlace-email");
+  const textoEmail = document.getElementById("texto-email");
+  if (enlaceEmail && textoEmail) {
+    enlaceEmail.href = "mailto:" + datosProyecto.contacto.email;
+    textoEmail.textContent = datosProyecto.contacto.email;
+  }
+
+  const enlaceTelefono = document.getElementById("enlace-telefono");
+  const textoTelefono = document.getElementById("texto-telefono");
+  if (enlaceTelefono && textoTelefono) {
+    enlaceTelefono.href = "tel:" + datosProyecto.contacto.telefono;
+    textoTelefono.textContent = datosProyecto.contacto.telefono;
+  }
+
+  const enlaceDireccion = document.getElementById("enlace-direccion");
+  const textoDireccion = document.getElementById("texto-direccion");
+  if (enlaceDireccion && textoDireccion) {
+    enlaceDireccion.href = datosProyecto.contacto.mapaUrl;
+    textoDireccion.textContent = datosProyecto.contacto.direccion;
+  }
+});
+
 const redesData = [
   { texto: "Facebook",  href: "https://www.facebook.com",  clase: "btn btn-outline-primary btn-sm" },
   { texto: "Instagram", href: "https://www.instagram.com", clase: "btn btn-outline-danger btn-sm" },
