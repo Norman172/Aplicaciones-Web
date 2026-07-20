@@ -27,46 +27,45 @@ document.addEventListener("DOMContentLoaded", function () {
   const presP2 = document.getElementById("presentacion-p2");
   if (presP2) presP2.textContent = datosProyecto.presentacion.parrafo2;
 
-  // Cargar datos de contacto como lista dinámica
+  // Cargar datos de contacto como tabla dinámica
   const contactoLista = document.getElementById("contacto-lista");
   if (contactoLista) {
-    const ul = document.createElement("ul");
-    ul.className = "list-unstyled mb-4";
+    const tabla = document.createElement("table");
+    tabla.className = "table table-dark table-borderless table-hover align-middle bg-transparent mb-4";
+    
+    const tbody = document.createElement("tbody");
     
     datosProyecto.contacto.forEach(item => {
-      const li = document.createElement("li");
-      li.className = "mb-3 d-flex align-items-center gap-3";
+      const tr = document.createElement("tr");
       
-      const iconSpan = document.createElement("span");
-      iconSpan.className = "fs-4";
-      iconSpan.textContent = item.icono;
+      const tdIcono = document.createElement("td");
+      tdIcono.className = "fs-4 text-center bg-transparent";
+      tdIcono.style.width = "50px";
+      tdIcono.textContent = item.icono;
       
-      const textDiv = document.createElement("div");
+      const tdInfo = document.createElement("td");
+      tdInfo.className = "bg-transparent";
       
       const titulo = document.createElement("strong");
-      titulo.className = "d-block text-white";
-      titulo.textContent = item.tipo + ":";
+      titulo.className = "d-block text-white mb-1";
+      titulo.textContent = item.tipo;
       
       const enlace = document.createElement("a");
       enlace.href = item.url;
-      enlace.className = "text-decoration-none";
-      enlace.style.color = "#DAE021";
+      enlace.className = "text-white text-decoration-none opacity-75";
+      enlace.target = "_blank";
       enlace.textContent = item.valor;
       
-      if(item.tipo === "Dirección") {
-          enlace.target = "_blank";
-          enlace.rel = "noopener noreferrer";
-      }
-
-      textDiv.appendChild(titulo);
-      textDiv.appendChild(enlace);
+      tdInfo.appendChild(titulo);
+      tdInfo.appendChild(enlace);
       
-      li.appendChild(iconSpan);
-      li.appendChild(textDiv);
-      ul.appendChild(li);
+      tr.appendChild(tdIcono);
+      tr.appendChild(tdInfo);
+      tbody.appendChild(tr);
     });
     
-    contactoLista.appendChild(ul);
+    tabla.appendChild(tbody);
+    contactoLista.appendChild(tabla);
   }
 });
 
