@@ -1510,3 +1510,71 @@ function renderizarTestimonios() {
 
 document.addEventListener("DOMContentLoaded", renderizarTestimonios);
 
+// ====== OPCIONES DE FORMULARIO DE COTIZACIÓN (Generación Dinámica) ======
+document.addEventListener("DOMContentLoaded", function () {
+  const opcionesServicio = [
+    { valor: "software", etiqueta: "Desarrollo de software a medida" },
+    { valor: "web", etiqueta: "Aplicaciones web modernas y responsivas" },
+    { valor: "gestion", etiqueta: "Diseño de plataformas de gestión" },
+    { valor: "soluciones", etiqueta: "Soluciones tecnológicas personalizadas" },
+    { valor: "otro", etiqueta: "Otro / No estoy seguro" }
+  ];
+  const selectServicio = document.getElementById("cot-servicio");
+  if (selectServicio) {
+    opcionesServicio.forEach(opt => {
+      const option = document.createElement("option");
+      option.value = opt.valor;
+      option.textContent = opt.etiqueta;
+      selectServicio.appendChild(option);
+    });
+  }
+
+  const opcionesPresupuesto = [
+    { valor: "menos500", etiqueta: "Menos de $500" },
+    { valor: "500-1500", etiqueta: "$500 – $1.500" },
+    { valor: "1500-5000", etiqueta: "$1.500 – $5.000" },
+    { valor: "5000-10000", etiqueta: "$5.000 – $10.000" },
+    { valor: "mas10000", etiqueta: "Más de $10.000" }
+  ];
+  const selectPresupuesto = document.getElementById("cot-presupuesto");
+  if (selectPresupuesto) {
+    opcionesPresupuesto.forEach(opt => {
+      const option = document.createElement("option");
+      option.value = opt.valor;
+      option.textContent = opt.etiqueta;
+      selectPresupuesto.appendChild(option);
+    });
+  }
+
+  const opcionesPlazo = [
+    { id: "plazo-urgente", valor: "menos1mes", etiqueta: "Menos de 1 mes", requerido: true },
+    { id: "plazo-corto", valor: "1-3meses", etiqueta: "1 – 3 meses" },
+    { id: "plazo-medio", valor: "3-6meses", etiqueta: "3 – 6 meses" },
+    { id: "plazo-flexible", valor: "flexible", etiqueta: "Flexible" }
+  ];
+  const contenedorPlazo = document.getElementById("cot-plazo-group");
+  if (contenedorPlazo) {
+    opcionesPlazo.forEach(opt => {
+      const div = document.createElement("div");
+      div.className = "form-check";
+      
+      const input = document.createElement("input");
+      input.className = "form-check-input";
+      input.type = "radio";
+      input.name = "cot-plazo";
+      input.id = opt.id;
+      input.value = opt.valor;
+      if (opt.requerido) input.required = true;
+      
+      const label = document.createElement("label");
+      label.className = "form-check-label";
+      label.htmlFor = opt.id;
+      label.textContent = opt.etiqueta;
+      
+      div.appendChild(input);
+      div.appendChild(label);
+      contenedorPlazo.appendChild(div);
+    });
+  }
+});
+
