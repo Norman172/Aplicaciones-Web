@@ -176,3 +176,53 @@ textarea.form-control.is-invalid {
 	background-position: right 0.75rem top 0.75rem;
 }
 
+.bg-gradient-primary {
+	background: linear-gradient(135deg, #0000FF 0%, #4facfe 100%) !important;
+}
+.bg-gradient-dark {
+	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%) !important;
+}
+.text-gradient {
+	background: linear-gradient(to right, #DAE021, #f6d365);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+.glass-navbar {
+	background: rgba(33, 37, 41, 0.85) !important;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.glass-card {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+.hover-zoom {
+	overflow: hidden;
+}
+.hover-zoom img {
+	transition: transform 0.5s ease;
+}
+.hover-zoom:hover img {
+	transform: scale(1.05);
+}
+.animate-float {
+	animation: float 6s ease-in-out infinite;
+}
+@keyframes float {
+	0% { transform: translateY(0px); }
+	50% { transform: translateY(-10px); }
+	100% { transform: translateY(0px); }
+}
+
+.bg-gradient-soft {
+	background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%) !important;
+}
+.bg-gradient-elegant {
+	background: linear-gradient(to top, #f3e7e9 0%, #e3eeff 100%) !important;
+}
+.bg-gradient-neutral {
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+}
