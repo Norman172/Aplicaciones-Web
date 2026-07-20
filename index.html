@@ -32,21 +32,24 @@
 
 	<!-- INICIO DEL CONTENIDO ESPECÍFICO DE LA PÁGINA (Esta parte NO iría en base.html) -->
 	<main>
-		<section id="inicio" class="py-5 my-5 text-white text-center bg-gradient-dark">
+		<section id="inicio" class="py-5 my-5 text-white bg-gradient-dark">
 			<div class="container py-3">
-				<div class="row justify-content-center">
-					<div class="col-md-10 col-lg-8">
+				<div class="row align-items-center g-5">
+					<div class="col-lg-6 text-center text-lg-start">
 						<h2 id="presentacion-titulo" class="display-5 fw-bold mb-4 text-gradient animate-float"></h2>
 						<p class="lead mb-4 lh-lg" style="color: #FFFFFF;">
 							En <strong id="presentacion-nombre"></strong> <span id="presentacion-p1"></span>
 						</p>
 						<p id="presentacion-p2" class="fs-5 mb-4 lh-lg" style="color: #FFFFFF; opacity: 0.90;"></p>
-						<div class="d-flex justify-content-center gap-3 flex-wrap">
-							<a href="#servicios" class="btn btn-lg fw-bold px-4 py-2"
+						<div class="d-flex justify-content-center justify-content-lg-start gap-3 flex-wrap">
+							<a href="#servicios" class="btn btn-lg fw-bold px-4 py-2 shadow-sm"
 								style="background-color: #DAE021; color: #0000FF; border: none;">Ver Servicios</a>
 							<a href="#contacto"
 								class="btn btn-outline-light btn-lg px-4 py-2 fw-semibold">Contáctanos</a>
 						</div>
+					</div>
+					<div class="col-lg-6 d-none d-lg-block text-center hover-zoom">
+						<img src="./public/img/servicio1.jpg" alt="Tecnología Cibercore" class="img-fluid rounded-4 shadow-lg" style="border: 4px solid rgba(255,255,255,0.1); max-height: 400px; object-fit: cover;">
 					</div>
 				</div>
 			</div>
