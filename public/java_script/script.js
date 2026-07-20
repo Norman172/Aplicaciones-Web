@@ -855,30 +855,42 @@ formCotizacion.addEventListener("submit", function (evento) {
 
   resumen.insertBefore(tituloResumen, resumen.firstChild);
 
-  formCotizacion.parentNode.insertBefore(resumen, formCotizacion.nextSibling);
+  // Simular carga con Spinner de Bootstrap
+  var textoCotizarOriginal = btnCotizar.innerHTML;
+  btnCotizar.disabled = true;
+  btnCotizar.style.opacity = "1";
+  btnCotizar.style.cursor = "wait";
+  btnCotizar.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Procesando...';
 
-  formCotizacion.reset();
-  limpiarEstadosValidacion();
+  setTimeout(function () {
+    btnCotizar.innerHTML = textoCotizarOriginal;
+    btnCotizar.style.cursor = "pointer";
 
-  var mensajeExito = document.createElement("div");
-  mensajeExito.textContent = "\u2705 Env\u00edo de formulario exitoso.";
-  mensajeExito.className = "alert alert-success mt-3 fw-bold text-center shadow-sm";
+    formCotizacion.parentNode.insertBefore(resumen, formCotizacion.nextSibling);
 
-  contadorServicios[servicio] = (contadorServicios[servicio] || 0) + 1;
-  renderContador();
+    formCotizacion.reset();
+    limpiarEstadosValidacion();
 
-  resumen.parentNode.insertBefore(mensajeExito, resumen.nextSibling);
-  mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
+    var mensajeExito = document.createElement("div");
+    mensajeExito.textContent = "✅ Envío de formulario exitoso.";
+    mensajeExito.className = "alert alert-success mt-3 fw-bold text-center shadow-sm";
 
-  btnEliminar.addEventListener("click", function () {
-    var serv = this.getAttribute("data-servicio");
-    if (contadorServicios[serv] > 0) {
-      contadorServicios[serv] = contadorServicios[serv] - 1;
-    }
+    contadorServicios[servicio] = (contadorServicios[servicio] || 0) + 1;
     renderContador();
-    if (mensajeExito.parentNode) mensajeExito.remove();
-    resumen.remove();
-  });
+
+    resumen.parentNode.insertBefore(mensajeExito, resumen.nextSibling);
+    mensajeExito.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    btnEliminar.addEventListener("click", function () {
+      var serv = this.getAttribute("data-servicio");
+      if (contadorServicios[serv] > 0) {
+        contadorServicios[serv] = contadorServicios[serv] - 1;
+      }
+      renderContador();
+      if (mensajeExito.parentNode) mensajeExito.remove();
+      resumen.remove();
+    });
+  }, 1500);
 });
 
 var camposTexto = document.querySelectorAll(
@@ -1150,38 +1162,48 @@ formContacto.addEventListener("submit", function (evento) {
   console.log("Contacto - Asunto:", contAsunto.value.trim());
   console.log("Contacto - Mensaje:", contMensaje.value.trim());
 
-  contConfirmacion.style.display = "block";
-  contConfirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
-
-  // NUEVO: Registrar nuevo dato desde el formulario a la sección dinámica de testimonios
-  if (typeof testimoniosData !== "undefined") {
-      testimoniosData.unshift({
-          nombre: contNombre.value.trim(),
-          asunto: contAsunto.value.trim(),
-          mensaje: contMensaje.value.trim()
-      });
-      renderizarTestimonios();
-  }
-
-  formContacto.reset();
-  var camposContacto = formContacto.querySelectorAll(".form-control");
-  camposContacto.forEach(function (c) {
-    c.classList.remove("is-valid", "is-invalid");
-  });
-  contAsuntoContador.textContent = "0";
-  contAsuntoContador.style.color = "";
-  contAsuntoContador.style.fontWeight = "";
-  contMensajeContador.textContent = "0";
-  contMensajeContador.style.color = "";
-  contMensajeContador.style.fontWeight = "";
-  contactoTocado = false;
+  // NUEVO: Simular carga con Spinner de Bootstrap
+  var textoOriginal = btnContacto.innerHTML;
   btnContacto.disabled = true;
-  btnContacto.style.opacity = "0.6";
-  btnContacto.style.cursor = "not-allowed";
+  btnContacto.style.opacity = "1";
+  btnContacto.style.cursor = "wait";
+  btnContacto.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Enviando...';
 
   setTimeout(function () {
-    contConfirmacion.style.display = "none";
-  }, 5000);
+    btnContacto.innerHTML = textoOriginal;
+    btnContacto.style.cursor = "not-allowed";
+
+    contConfirmacion.style.display = "block";
+    contConfirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    if (typeof testimoniosData !== "undefined") {
+        testimoniosData.unshift({
+            nombre: contNombre.value.trim(),
+            asunto: contAsunto.value.trim(),
+            mensaje: contMensaje.value.trim()
+        });
+        renderizarTestimonios();
+    }
+
+    formContacto.reset();
+    var camposContacto = formContacto.querySelectorAll(".form-control");
+    camposContacto.forEach(function (c) {
+      c.classList.remove("is-valid", "is-invalid");
+    });
+    contAsuntoContador.textContent = "0";
+    contAsuntoContador.style.color = "";
+    contAsuntoContador.style.fontWeight = "";
+    contMensajeContador.textContent = "0";
+    contMensajeContador.style.color = "";
+    contMensajeContador.style.fontWeight = "";
+    contactoTocado = false;
+    btnContacto.disabled = true;
+    btnContacto.style.opacity = "0.6";
+
+    setTimeout(function () {
+      contConfirmacion.style.display = "none";
+    }, 5000);
+  }, 1500);
 });
 
 var camposContactoFocus = formContacto.querySelectorAll(".form-control");
