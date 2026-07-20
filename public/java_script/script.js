@@ -1440,17 +1440,12 @@ if (serviciosGrid) {
 
     const btn = document.createElement("a");
     btn.href = "#contacto";
-    btn.className = "btn mt-auto fw-bold";
-    btn.style.backgroundColor = "#0000FF";
-    btn.style.color = "#FFFFFF";
-    btn.style.border = "none";
+    btn.className = "btn btn-primary mt-auto fw-bold shadow-sm";
     btn.textContent = "Saber más";
     
     // Si está en mantenimiento, deshabilitamos el botón
     if (servicio.estado === "mantenimiento") {
-       btn.className += " disabled";
-       btn.style.backgroundColor = "#cccccc";
-       btn.style.cursor = "not-allowed";
+       btn.className = "btn btn-secondary disabled mt-auto fw-bold";
        btn.textContent = "No disponible";
     }
 
