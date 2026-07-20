@@ -336,131 +336,37 @@ cards.forEach(function (card) {
   });
 });
 
-const overlay = document.createElement("div");
-overlay.id = "modal-overlay";
-overlay.style.cssText =
-  "display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55);" +
-  "z-index:9999; align-items:center; justify-content:center;" +
-  "backdrop-filter:blur(4px); transition:opacity 0.3s;";
-
-const modalCaja = document.createElement("div");
-modalCaja.id = "modal-caja";
-modalCaja.style.cssText =
-  "background:#fff; border-radius:16px; padding:36px; max-width:480px; width:90%;" +
-  "position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.25);" +
-  "animation:modalEntrada 0.3s ease;";
-
-const estiloModal = document.createElement("style");
-estiloModal.textContent =
-  "@keyframes modalEntrada {" +
-  "  from { opacity:0; transform:scale(0.85) translateY(30px); }" +
-  "  to   { opacity:1; transform:scale(1)    translateY(0);     }" +
-  "}";
-document.head.appendChild(estiloModal);
-
-const btnCerrar = document.createElement("button");
-btnCerrar.textContent = "✕";
-btnCerrar.style.cssText =
-  "position:absolute; top:14px; right:18px; background:none; border:none;" +
-  "font-size:1.4rem; cursor:pointer; color:#555; line-height:1;";
-btnCerrar.setAttribute("aria-label", "Cerrar modal");
-
-const modalContenido = document.createElement("div");
-modalContenido.id = "modal-contenido";
-
-modalCaja.appendChild(btnCerrar);
-modalCaja.appendChild(modalContenido);
-overlay.appendChild(modalCaja);
-document.body.appendChild(overlay);
-
-function abrirModal(indice) {
-  const datos = serviciosData[indice];
-
-  modalContenido.innerHTML = "";
-
-  const encabezado = document.createElement("div");
-  encabezado.className = "d-flex align-items-center gap-3 mb-3";
-
-  const icono = document.createElement("span");
-  icono.textContent = datos.icono;
-  icono.className = "fs-1";
-
-  const tituloModal = document.createElement("h3");
-  tituloModal.textContent = datos.titulo;
-  tituloModal.className = "text-primary fw-bold h5 m-0";
-
-  encabezado.appendChild(icono);
-  encabezado.appendChild(tituloModal);
-
-  const descripcionModal = document.createElement("p");
-  descripcionModal.textContent = datos.descripcion;
-  descripcionModal.className = "text-secondary mb-3";
-
-  const subtitulo = document.createElement("p");
-  subtitulo.textContent = "¿Qué incluye este servicio?";
-  subtitulo.className = "fw-bold text-dark mb-2 small";
-
-  const lista = document.createElement("ul");
-  lista.className = "ps-3 mb-4";
-
-  datos.detalle.forEach(function (item) {
-    const li = document.createElement("li");
-    li.textContent = item;
-    li.className = "text-secondary small mb-1";
-    lista.appendChild(li);
-  });
-
-  const btnContactar = document.createElement("a");
-  btnContactar.href = "#contacto";
-  btnContactar.textContent = "Contáctanos";
-  btnContactar.className = "btn btn-primary fw-bold px-4 py-2 rounded-2 d-inline-block";
-
-  btnContactar.addEventListener("mouseenter", function () {
-    this.style.background = "#0000cc";
-  });
-  btnContactar.addEventListener("mouseleave", function () {
-    this.style.background = "#0000FF";
-  });
-
-  btnContactar.addEventListener("click", function () {
-    cerrarModal();
-  });
-
-  modalContenido.appendChild(encabezado);
-  modalContenido.appendChild(descripcionModal);
-  modalContenido.appendChild(subtitulo);
-  modalContenido.appendChild(lista);
-  modalContenido.appendChild(btnContactar);
-
-  overlay.style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-
-function cerrarModal() {
-  overlay.style.display = "none";
-  document.body.style.overflow = "";
-}
-
-botonesVerMas.forEach(function (boton) {
-  boton.addEventListener("click", function () {
-    const id = parseInt(this.getAttribute("data-servicio-id"), 10);
-    abrirModal(id);
-  });
-});
-
-btnCerrar.addEventListener("click", cerrarModal);
-
-overlay.addEventListener("click", function (evento) {
-  if (evento.target === overlay) {
-    cerrarModal();
+  // ====== MODAL DE BOOTSTRAP (SERVICIOS) ======
+  function abrirModal(indice) {
+    const datos = serviciosData[indice];
+  
+    document.getElementById("modal-icono").textContent = datos.icono;
+    document.getElementById("modalServicioLabel").textContent = datos.titulo;
+    document.getElementById("modal-descripcion").textContent = datos.descripcion;
+  
+    const lista = document.getElementById("modal-lista");
+    lista.innerHTML = "";
+    datos.detalle.forEach(function (item) {
+      const li = document.createElement("li");
+      li.textContent = item;
+      li.className = "mb-1";
+      lista.appendChild(li);
+    });
+  
+    const modalElement = document.getElementById("modalServicio");
+    const modalServicio = bootstrap.Modal.getOrCreateInstance(modalElement);
+    modalServicio.show();
   }
-});
-
-document.addEventListener("keydown", function (evento) {
-  if (evento.key === "Escape") {
-    cerrarModal();
-  }
-});
+  
+  botonesVerMas.forEach(function (boton) {
+    boton.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (!this.classList.contains("disabled")) {
+        const id = parseInt(this.getAttribute("data-servicio-id"), 10);
+        abrirModal(id);
+      }
+    });
+  });
 
 const observer = new IntersectionObserver(
   function (entradas) {

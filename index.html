@@ -317,7 +317,29 @@
 	</main>
 	<!-- FIN DEL CONTENIDO ESPECÍFICO DE LA PÁGINA -->
 
-	<!-- INICIO DE LA SEGUNDA PARTE DE base.html -->
+	<!-- Modal de Bootstrap para Detalles del Servicio -->
+	<div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+				<div class="modal-header border-0 pb-0">
+					<div class="d-flex align-items-center gap-3">
+						<span id="modal-icono" class="fs-1"></span>
+						<h3 class="modal-title h5 text-primary fw-bold m-0" id="modalServicioLabel"></h3>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modal-descripcion" class="text-secondary mb-3"></p>
+					<p class="fw-bold text-dark mb-2 small">¿Qué incluye este servicio?</p>
+					<ul id="modal-lista" class="ps-3 mb-4 text-secondary small"></ul>
+				</div>
+				<div class="modal-footer border-0 pt-0">
+					<button type="button" class="btn btn-secondary rounded-2 px-4" data-bs-dismiss="modal">Cerrar</button>
+					<a href="#contacto" id="modal-btn-contactar" class="btn btn-primary fw-bold px-4 rounded-2" data-bs-dismiss="modal">Contáctanos</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<footer class="bg-dark text-white py-5 mt-5 border-top">
 		<div class="container">
