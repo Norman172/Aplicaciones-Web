@@ -161,36 +161,27 @@
 							personalizada sin compromiso.</p>
 
 						<div class="card border-0 shadow p-4 p-md-5">
-							<form id="form-cotizacion" novalidate>
-
-								<div class="mb-4">
-									<label for="cot-nombre" class="form-label fw-semibold">Nombre completo <span
-											class="text-danger">*</span></label>
-									<input type="text" class="form-control" id="cot-nombre"
-										placeholder="Nombre y apellido o nombre de empresa" required>
+							<form id="form-cotizacion" class="row g-4" novalidate>
+								<div class="col-md-6">
+									<label for="cot-nombre" class="form-label fw-semibold">Nombre completo <span class="text-danger">*</span></label>
+									<input type="text" class="form-control" id="cot-nombre" placeholder="Nombre y apellido" required>
 									<div class="invalid-feedback">Por favor ingresa tu nombre.</div>
 								</div>
 
-								<div class="mb-4">
-									<label for="cot-email" class="form-label fw-semibold">Correo electrónico <span
-											class="text-danger">*</span></label>
-									<input type="email" class="form-control" id="cot-email"
-										placeholder="nombre@correo.com" required>
+								<div class="col-md-6">
+									<label for="cot-email" class="form-label fw-semibold">Correo electrónico <span class="text-danger">*</span></label>
+									<input type="email" class="form-control" id="cot-email" placeholder="nombre@correo.com" required>
 									<div class="invalid-feedback">Por favor ingresa un correo válido.</div>
 								</div>
 
-								<div class="mb-4">
-									<label for="cot-empresa" class="form-label fw-semibold">Empresa /
-										Organización</label>
-									<input type="text" class="form-control" id="cot-empresa"
-										placeholder="Nombre de tu empresa (opcional)">
-									<div class="invalid-feedback">El nombre de la empresa debe tener al menos 2
-										caracteres.</div>
+								<div class="col-md-12">
+									<label for="cot-empresa" class="form-label fw-semibold">Empresa / Organización</label>
+									<input type="text" class="form-control" id="cot-empresa" placeholder="Nombre de tu empresa (opcional)">
+									<div class="invalid-feedback">El nombre de la empresa debe tener al menos 2 caracteres.</div>
 								</div>
 
-								<div class="mb-4">
-									<label for="cot-servicio" class="form-label fw-semibold">Servicio de interés <span
-											class="text-danger">*</span></label>
+								<div class="col-md-6">
+									<label for="cot-servicio" class="form-label fw-semibold">Servicio de interés <span class="text-danger">*</span></label>
 									<select class="form-select" id="cot-servicio" required>
 										<option value="" disabled selected>Selecciona un servicio...</option>
 										<!-- Generado dinámicamente con JS -->
@@ -198,9 +189,8 @@
 									<div class="invalid-feedback">Por favor selecciona un servicio.</div>
 								</div>
 
-								<div class="mb-4">
-									<label for="cot-presupuesto" class="form-label fw-semibold">Presupuesto estimado
-										<span class="text-danger">*</span></label>
+								<div class="col-md-6">
+									<label for="cot-presupuesto" class="form-label fw-semibold">Presupuesto estimado <span class="text-danger">*</span></label>
 									<select class="form-select" id="cot-presupuesto" required>
 										<option value="" disabled selected>Selecciona un rango...</option>
 										<!-- Generado dinámicamente con JS -->
@@ -208,47 +198,39 @@
 									<div class="invalid-feedback">Por favor selecciona un rango de presupuesto.</div>
 								</div>
 
-								<div class="mb-4">
-									<label class="form-label fw-semibold">Plazo deseado <span
-											class="text-danger">*</span></label>
+								<div class="col-md-12">
+									<label class="form-label fw-semibold">Plazo deseado <span class="text-danger">*</span></label>
 									<div class="d-flex flex-wrap gap-3 mt-1" id="cot-plazo-group">
 										<!-- Generado dinámicamente con JS -->
 									</div>
-									<div id="plazo-error" class="text-danger small mt-1" style="display:none;">Por favor
-										selecciona un plazo.</div>
+									<div id="plazo-error" class="text-danger small mt-1" style="display:none;">Por favor selecciona un plazo.</div>
 								</div>
 
-								<div class="mb-4">
-									<label for="cot-descripcion" class="form-label fw-semibold">Descripción del proyecto
-										<span class="text-danger">*</span></label>
-									<textarea class="form-control" id="cot-descripcion" rows="4"
-										placeholder="Describe brevemente tu proyecto, objetivos y cualquier detalle relevante..."
-										required></textarea>
+								<div class="col-md-12">
+									<label for="cot-descripcion" class="form-label fw-semibold">Descripción del proyecto <span class="text-danger">*</span></label>
+									<textarea class="form-control" id="cot-descripcion" rows="4" placeholder="Describe brevemente tu proyecto, objetivos y cualquier detalle relevante..." required></textarea>
 									<div class="invalid-feedback">Por favor describe tu proyecto.</div>
 									<div class="form-text text-end">
 										<span id="cot-contador">0</span> / 500 caracteres
 									</div>
 								</div>
 
-								<div class="d-grid">
-									<button type="submit" id="btn-cotizar" class="btn btn-lg fw-bold py-3"
-										style="background-color: #0000FF; color: #FFFFFF; border: none;">
-										Enviar solicitud de cotización
+								<div class="col-md-6 d-grid">
+									<button type="submit" id="btn-cotizar" class="btn btn-lg fw-bold py-3 shadow-sm hover-zoom" style="background-color: #0000FF; color: #FFFFFF; border: none;">
+										Enviar solicitud
 									</button>
 								</div>
 
-								<div class="d-grid mt-2">
-									<button type="button" id="btn-limpiar" class="btn btn-lg fw-bold py-3"
-										style="background-color: #6c757d; color: #FFFFFF; border: none;">
+								<div class="col-md-6 d-grid">
+									<button type="button" id="btn-limpiar" class="btn btn-lg fw-bold py-3 shadow-sm hover-zoom" style="background-color: #6c757d; color: #FFFFFF; border: none;">
 										Limpiar formulario
 									</button>
 								</div>
 
-								<div id="cot-confirmacion" class="alert alert-success mt-4 text-center fw-semibold"
+								<div id="cot-confirmacion" class="col-12 alert alert-success mt-4 text-center fw-semibold"
 									style="display:none;" role="alert">
 									✅ ¡Solicitud enviada! Nos pondremos en contacto contigo a la brevedad.
 								</div>
-
 							</form>
 						</div>
 					</div>
