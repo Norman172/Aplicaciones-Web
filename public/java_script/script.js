@@ -1248,6 +1248,16 @@ formContacto.addEventListener("submit", function (evento) {
   contConfirmacion.style.display = "block";
   contConfirmacion.scrollIntoView({ behavior: "smooth", block: "center" });
 
+  // NUEVO: Registrar nuevo dato desde el formulario a la sección dinámica de testimonios
+  if (typeof testimoniosData !== "undefined") {
+      testimoniosData.unshift({
+          nombre: contNombre.value.trim(),
+          asunto: contAsunto.value.trim(),
+          mensaje: contMensaje.value.trim()
+      });
+      renderizarTestimonios();
+  }
+
   formContacto.reset();
   var camposContacto = formContacto.querySelectorAll(".form-control");
   camposContacto.forEach(function (c) {
@@ -1455,4 +1465,48 @@ if (serviciosGrid) {
     serviciosGrid.appendChild(col);
   }
 }
+
+// ====== TESTIMONIOS DINÁMICOS ======
+const testimoniosData = [
+  {
+    nombre: "Juan Pérez",
+    asunto: "Excelente servicio",
+    mensaje: "El equipo es muy profesional. Totalmente recomendados.",
+    foto: "https://randomuser.me/api/portraits/men/32.jpg"
+  }
+];
+
+function renderizarTestimonios() {
+  const grid = document.getElementById("testimonios-grid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  
+  if (testimoniosData.length === 0) {
+      grid.innerHTML = "<p class='text-center text-muted fs-5'>Aún no hay mensajes. ¡Sé el primero en contactarnos!</p>";
+      return;
+  }
+  
+  for (let i = 0; i < testimoniosData.length; i++) {
+    const item = testimoniosData[i];
+    const col = document.createElement("div");
+    col.className = "col-md-6 col-lg-4";
+    
+    // Si hay foto, mostramos imagen redonda, si no un avatar por defecto basado en sus iniciales
+    const imagenUrl = item.foto || `https://ui-avatars.com/api/?name=${encodeURIComponent(item.nombre)}&background=0000FF&color=fff&size=100`;
+    
+    col.innerHTML = `
+        <div class="card h-100 shadow-sm border-0 p-4 text-center" style="background-color: #f8f9fa; border-radius: 12px;">
+            <div class="mb-3">
+                <img src="${imagenUrl}" alt="Foto de ${item.nombre}" class="rounded-circle shadow-sm" style="width: 80px; height: 80px; object-fit: cover; border: 3px solid #DAE021;">
+            </div>
+            <h4 class="h5 fw-bold mb-1" style="color: #0000FF;">${item.nombre}</h4>
+            <p class="small text-muted mb-3 fw-semibold text-uppercase">${item.asunto}</p>
+            <p class="text-secondary mb-0 fst-italic">"${item.mensaje}"</p>
+        </div>
+    `;
+    grid.appendChild(col);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", renderizarTestimonios);
 
