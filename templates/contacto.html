@@ -1,0 +1,77 @@
+<section id="contacto" class="py-5 my-5 text-white" style="background-color: #0000FF;">
+			<div class="container">
+				<h2 class="display-5 fw-bold mb-5 text-center">Contacto</h2>
+				<div class="row g-5">
+					<article class="col-lg-5">
+						<h3 class="h4 fw-bold mb-4" style="color: #DAE021;">Información de contacto</h3>
+						<p class="mb-3"><strong>Correo electrónico:</strong> <a href="mailto:contacto@cibercore.com"
+								class="text-decoration-none" style="color: #DAE021;">contacto@cibercore.com</a></p>
+						<p class="mb-3"><strong>Teléfono:</strong> <a href="tel:+593 99 233 6174"
+								class="text-decoration-none" style="color: #DAE021;">+593 99 233 6174</a></p>
+						<p class="mb-4"><strong>Dirección:</strong> <a
+								href="https://maps.google.com/?q=11+de+Noviembre+y+Ricardo+Descalzi,+Riobamba"
+								target="_blank" rel="noopener noreferrer" class="text-decoration-none"
+								style="color: #DAE021;">11 de Noviembre y Ricardo Descalzi, Riobamba</a></p>
+
+						<p class="mb-2"><strong>Redes sociales:</strong></p>
+						<ul id="redes-lista" class="list-inline mb-4"></ul>
+
+						<div class="rounded shadow-sm overflow-hidden mt-4">
+							<iframe
+								src="https://maps.google.com/maps?q=11%20de%20Noviembre%20y%20Ricardo%20Descalzi,%20Riobamba&t=&z=16&ie=UTF8&iwloc=&output=embed"
+								width="100%" height="220" style="border:0;" allowfullscreen="" loading="lazy">
+							</iframe>
+						</div>
+					</article>
+
+					<div class="col-lg-7">
+						<div class="card p-4 shadow-sm border-0 bg-light">
+							<form id="form-contacto" novalidate>
+								<div class="mb-3">
+									<label for="cont-nombre" class="form-label fw-semibold">Nombre <span
+											class="text-danger">*</span></label>
+									<input type="text" class="form-control" id="cont-nombre"
+										placeholder="Nombre y apellido o nombre de empresa" required>
+									<div class="invalid-feedback">Por favor ingresa tu nombre.</div>
+								</div>
+								<div class="mb-3">
+									<label for="cont-email" class="form-label fw-semibold">Correo electrónico <span
+											class="text-danger">*</span></label>
+									<input type="email" class="form-control" id="cont-email"
+										placeholder="nombre@correo.com" required>
+									<div class="invalid-feedback">Por favor ingresa un correo válido.</div>
+								</div>
+								<div class="mb-3">
+									<label for="cont-asunto" class="form-label fw-semibold">Asunto <span
+											class="text-danger">*</span></label>
+									<input type="text" class="form-control" id="cont-asunto"
+										placeholder="Asunto de la consulta (mín. 20 caracteres)" maxlength="100"
+										required>
+									<div class="invalid-feedback">Por favor ingresa el asunto.</div>
+									<div class="form-text text-end">
+										<span id="cont-asunto-contador">0</span> / 100 caracteres
+									</div>
+								</div>
+								<div class="mb-3">
+									<label for="cont-mensaje" class="form-label fw-semibold">Mensaje <span
+											class="text-danger">*</span></label>
+									<textarea class="form-control" id="cont-mensaje" rows="4"
+										placeholder="Escribe tu mensaje aquí (mín. 20 caracteres)..." maxlength="1000"
+										required></textarea>
+									<div class="invalid-feedback">Por favor escribe tu mensaje.</div>
+									<div class="form-text text-end">
+										<span id="cont-mensaje-contador">0</span> / 1000 caracteres
+									</div>
+								</div>
+								<button type="submit" id="btn-contacto" class="btn w-100 fw-bold py-2 mt-2 text-white"
+									style="background-color: #0000FF; border: none;">Enviar mensaje</button>
+								<div id="cont-confirmacion" class="alert alert-success mt-3 text-center fw-semibold"
+									style="display:none;" role="alert">
+									✅ ¡Mensaje enviado! Nos pondremos en contacto contigo pronto.
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
