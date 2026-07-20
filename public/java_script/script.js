@@ -1358,22 +1358,26 @@ const listadoServicios = [
   {
     titulo: "Desarrollo de software a medida",
     descripcion: "Desarrollo de soluciones personalizadas adaptadas a las necesidades específicas de tu empresa.",
-    imagen: "./public/img/servicio1.jpg"
+    imagen: "./public/img/servicio1.jpg",
+    estado: "popular"
   },
   {
     titulo: "Aplicaciones web modernas y responsivas",
     descripcion: "Creación de sitios web dinámicos, seguros y adaptables a cualquier tamaño de pantalla.",
-    imagen: "./public/img/servicio2.jpg"
+    imagen: "./public/img/servicio2.jpg",
+    estado: "nuevo"
   },
   {
     titulo: "Diseño de plataformas de gestión",
     descripcion: "Diseño de sistemas y plataformas para optimizar la administración y procesos de tu negocio.",
-    imagen: "./public/img/servicio3.jpg"
+    imagen: "./public/img/servicio3.jpg",
+    estado: "normal"
   },
   {
     titulo: "Soluciones tecnológicas personalizadas",
     descripcion: "Implementación de herramientas tecnológicas innovadoras diseñadas para resolver tus desafíos.",
-    imagen: "./public/img/servicio4.jpg"
+    imagen: "./public/img/servicio4.jpg",
+    estado: "mantenimiento"
   }
 ];
 
@@ -1387,7 +1391,7 @@ if (serviciosGrid) {
     col.className = "col-md-6 col-lg-3";
 
     const card = document.createElement("div");
-    card.className = "card h-100 shadow-sm border-1";
+    card.className = "card h-100 shadow-sm border-1 position-relative";
 
     const img = document.createElement("img");
     img.src = servicio.imagen;
@@ -1396,6 +1400,24 @@ if (serviciosGrid) {
 
     const cardBody = document.createElement("div");
     cardBody.className = "card-body d-flex flex-column p-3";
+    
+    // CONDICIONAL: Mostrar mensaje según el estado de los datos
+    if (servicio.estado === "nuevo") {
+      const badge = document.createElement("span");
+      badge.className = "badge bg-success mb-2 align-self-start text-uppercase";
+      badge.textContent = "¡Nuevo Servicio!";
+      cardBody.appendChild(badge);
+    } else if (servicio.estado === "popular") {
+      const badge = document.createElement("span");
+      badge.className = "badge bg-warning text-dark mb-2 align-self-start text-uppercase";
+      badge.textContent = "Más Solicitado";
+      cardBody.appendChild(badge);
+    } else if (servicio.estado === "mantenimiento") {
+      const badge = document.createElement("span");
+      badge.className = "badge bg-danger mb-2 align-self-start text-uppercase";
+      badge.textContent = "Temporalmente Inactivo";
+      cardBody.appendChild(badge);
+    }
 
     const titulo = document.createElement("h3");
     titulo.className = "card-title h5 fw-bold mb-3";
@@ -1413,6 +1435,14 @@ if (serviciosGrid) {
     btn.style.color = "#FFFFFF";
     btn.style.border = "none";
     btn.textContent = "Saber más";
+    
+    // Si está en mantenimiento, deshabilitamos el botón
+    if (servicio.estado === "mantenimiento") {
+       btn.className += " disabled";
+       btn.style.backgroundColor = "#cccccc";
+       btn.style.cursor = "not-allowed";
+       btn.textContent = "No disponible";
+    }
 
     cardBody.appendChild(titulo);
     cardBody.appendChild(desc);
