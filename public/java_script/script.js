@@ -1353,3 +1353,76 @@ if (novedadesGrid) {
   });
 }
 
+// ====== SERVICIOS DINÁMICOS (Estructura Repetitiva FOR) ======
+const listadoServicios = [
+  {
+    titulo: "Desarrollo de software a medida",
+    descripcion: "Desarrollo de soluciones personalizadas adaptadas a las necesidades específicas de tu empresa.",
+    imagen: "./public/img/servicio1.jpg"
+  },
+  {
+    titulo: "Aplicaciones web modernas y responsivas",
+    descripcion: "Creación de sitios web dinámicos, seguros y adaptables a cualquier tamaño de pantalla.",
+    imagen: "./public/img/servicio2.jpg"
+  },
+  {
+    titulo: "Diseño de plataformas de gestión",
+    descripcion: "Diseño de sistemas y plataformas para optimizar la administración y procesos de tu negocio.",
+    imagen: "./public/img/servicio3.jpg"
+  },
+  {
+    titulo: "Soluciones tecnológicas personalizadas",
+    descripcion: "Implementación de herramientas tecnológicas innovadoras diseñadas para resolver tus desafíos.",
+    imagen: "./public/img/servicio4.jpg"
+  }
+];
+
+const serviciosGrid = document.getElementById("servicios-grid");
+if (serviciosGrid) {
+  // Implementación explícita de estructura repetitiva FOR para mostrar varios registros
+  for (let i = 0; i < listadoServicios.length; i++) {
+    const servicio = listadoServicios[i];
+
+    const col = document.createElement("div");
+    col.className = "col-md-6 col-lg-3";
+
+    const card = document.createElement("div");
+    card.className = "card h-100 shadow-sm border-1";
+
+    const img = document.createElement("img");
+    img.src = servicio.imagen;
+    img.alt = servicio.titulo;
+    img.className = "card-img-top img-fluid";
+
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body d-flex flex-column p-3";
+
+    const titulo = document.createElement("h3");
+    titulo.className = "card-title h5 fw-bold mb-3";
+    titulo.style.color = "#0000FF";
+    titulo.textContent = servicio.titulo;
+
+    const desc = document.createElement("p");
+    desc.className = "card-text text-muted mb-4 fs-6";
+    desc.textContent = servicio.descripcion;
+
+    const btn = document.createElement("a");
+    btn.href = "#contacto";
+    btn.className = "btn mt-auto fw-bold";
+    btn.style.backgroundColor = "#0000FF";
+    btn.style.color = "#FFFFFF";
+    btn.style.border = "none";
+    btn.textContent = "Saber más";
+
+    cardBody.appendChild(titulo);
+    cardBody.appendChild(desc);
+    cardBody.appendChild(btn);
+
+    card.appendChild(img);
+    card.appendChild(cardBody);
+    col.appendChild(card);
+    
+    serviciosGrid.appendChild(col);
+  }
+}
+
