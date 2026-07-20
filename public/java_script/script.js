@@ -1215,3 +1215,69 @@ camposContactoFocus.forEach(function (campo) {
 
 actualizarBtnContacto();
 
+// ====== NOVEDADES DINÁMICAS ======
+const novedadesData = [
+  {
+    titulo: "Lanzamiento de nueva API",
+    descripcion: "Hemos lanzado nuestra nueva API REST para integración con sistemas de terceros.",
+    fecha: "20 de Julio, 2026",
+    imagen: "./public/img/novedades_api.png"
+  },
+  {
+    titulo: "Alianza Estratégica",
+    descripcion: "Cibercore se asocia con líderes tecnológicos para mejorar la infraestructura en la nube.",
+    fecha: "12 de Julio, 2026",
+    imagen: "./public/img/novedades_alliance.png"
+  },
+  {
+    titulo: "Certificación de Seguridad",
+    descripcion: "Obtuvimos la certificación ISO 27001 garantizando la máxima seguridad en nuestros desarrollos.",
+    fecha: "05 de Julio, 2026",
+    imagen: "./public/img/novedades_security.png"
+  }
+];
+
+const novedadesGrid = document.getElementById("novedades-grid");
+if (novedadesGrid) {
+  novedadesData.forEach(function (item) {
+    const col = document.createElement("div");
+    col.className = "col-md-6 col-lg-4";
+
+    const card = document.createElement("div");
+    card.className = "card h-100 shadow-sm border-0 text-center";
+    card.style.overflow = "hidden";
+
+    const imagenContenedor = document.createElement("div");
+    imagenContenedor.className = "ratio ratio-16x9";
+    const img = document.createElement("img");
+    img.src = item.imagen;
+    img.alt = item.titulo;
+    img.className = "card-img-top object-fit-cover";
+    imagenContenedor.appendChild(img);
+
+    const cardBody = document.createElement("div");
+    cardBody.className = "card-body p-4 d-flex flex-column";
+
+    const titulo = document.createElement("h3");
+    titulo.className = "h5 fw-bold text-primary mb-2";
+    titulo.textContent = item.titulo;
+
+    const fecha = document.createElement("p");
+    fecha.className = "text-muted small mb-3";
+    fecha.textContent = item.fecha;
+
+    const descripcion = document.createElement("p");
+    descripcion.className = "text-secondary mb-0 flex-grow-1";
+    descripcion.textContent = item.descripcion;
+
+    cardBody.appendChild(titulo);
+    cardBody.appendChild(fecha);
+    cardBody.appendChild(descripcion);
+
+    card.appendChild(imagenContenedor);
+    card.appendChild(cardBody);
+    col.appendChild(card);
+    novedadesGrid.appendChild(col);
+  });
+}
+
