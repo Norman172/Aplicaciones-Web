@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Facturación - Cibercore{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient-soft">
+    <div class="container">
+        <h2 class="display-6 fw-bold mb-4 text-warning" style="color: #d68b00 !important;">Historial de Facturación</h2>
+        <p class="lead text-muted mb-5">Consulta de facturas emitidas por servicios prestados y venta de equipos.</p>
+        
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle mb-0">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th class="border-0 px-4 py-3">Nº Factura</th>
+                                <th class="border-0 py-3">Fecha</th>
+                                <th class="border-0 py-3">Cliente</th>
+                                <th class="border-0 py-3">Concepto</th>
+                                <th class="border-0 py-3 text-end">Total (USD)</th>
+                                <th class="border-0 px-4 py-3 text-center">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-4 fw-bold">FAC-2026-0015</td>
+                                <td>15/08/2026</td>
+                                <td>Consultora Integral S.A.</td>
+                                <td>Desarrollo de Sistema Web</td>
+                                <td class="text-end fw-semibold">$ 2,500.00</td>
+                                <td class="px-4 text-center"><span class="badge bg-success">Pagada</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 fw-bold">FAC-2026-0016</td>
+                                <td>16/08/2026</td>
+                                <td>Instituto Educativo del Sur</td>
+                                <td>Licencias Antivirus (x50)</td>
+                                <td class="text-end fw-semibold">$ 6,000.00</td>
+                                <td class="px-4 text-center"><span class="badge bg-warning text-dark">Pendiente</span></td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 fw-bold">FAC-2026-0017</td>
+                                <td>17/08/2026</td>
+                                <td>Tech Startups Ecuador</td>
+                                <td>Suscripción Cloud Backup (1 Año)</td>
+                                <td class="text-end fw-semibold">$ 299.00</td>
+                                <td class="px-4 text-center"><span class="badge bg-success">Pagada</span></td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-light">
+                            <tr>
+                                <td colspan="4" class="text-end fw-bold px-4 py-3">Total Acumulado (Ejemplo)</td>
+                                <td class="text-end fw-bold text-primary py-3">$ 8,799.00</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

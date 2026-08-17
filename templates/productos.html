@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Productos - Cibercore{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="display-6 fw-bold mb-4 text-primary">Catálogo de Productos</h2>
+        <p class="lead text-muted mb-5">Gestione el inventario de licencias de software y equipos tecnológicos.</p>
+        
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-hover table-striped align-middle mb-0 bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre del Producto</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Precio (USD)</th>
+                        <th scope="col">Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">101</th>
+                        <td>Licencia Antivirus Empresarial</td>
+                        <td>Software</td>
+                        <td>$ 120.00</td>
+                        <td><span class="badge bg-success">En Stock (50)</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">102</th>
+                        <td>Servidor NAS 8TB</td>
+                        <td>Hardware</td>
+                        <td>$ 850.00</td>
+                        <td><span class="badge bg-warning text-dark">Poco Stock (3)</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">103</th>
+                        <td>Suscripción Cloud Backup (1 Año)</td>
+                        <td>Servicio Cloud</td>
+                        <td>$ 299.00</td>
+                        <td><span class="badge bg-success">Ilimitado</span></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">104</th>
+                        <td>Router Empresarial Wi-Fi 6</td>
+                        <td>Redes</td>
+                        <td>$ 250.00</td>
+                        <td><span class="badge bg-danger">Agotado</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

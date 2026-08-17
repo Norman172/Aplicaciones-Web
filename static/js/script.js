@@ -166,27 +166,31 @@ footerData.forEach(function (dato) {
   footerGrid.appendChild(col);
 });
 
+/*
 const navItems = [
   { texto: "Inicio",        href: "#inicio" },
-  { texto: "Qui\u00e9nes somos", href: "#quienessomos" },
+  { texto: "Quiénes somos", href: "#quienessomos" },
   { texto: "Servicios",     href: "#servicios" },
   { texto: "Proyectos",     href: "#proyectos" },
   { texto: "Blog",          href: "#blog" },
-  { texto: "Cotizaci\u00f3n",  href: "#cotizacion" },
+  { texto: "Cotización",  href: "#cotizacion" },
   { texto: "Contacto",      href: "#contacto" },
 ];
 
 const navLista = document.getElementById("nav-lista");
-navItems.forEach(function (item) {
-  const li = document.createElement("li");
-  li.className = "nav-item";
-  const a = document.createElement("a");
-  a.className = "nav-link";
-  a.href = item.href;
-  a.textContent = item.texto;
-  li.appendChild(a);
-  navLista.appendChild(li);
-});
+if (navLista && navLista.children.length === 0) {
+    navItems.forEach(function (item) {
+      const li = document.createElement("li");
+      li.className = "nav-item";
+      const a = document.createElement("a");
+      a.className = "nav-link";
+      a.href = item.href;
+      a.textContent = item.texto;
+      li.appendChild(a);
+      navLista.appendChild(li);
+    });
+}
+*/
 
 const blogData = [
   {

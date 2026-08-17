@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Proveedores - Cibercore{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="display-6 fw-bold mb-4 text-info">Gestión de Proveedores</h2>
+        <p class="lead text-muted mb-5">Lista de proveedores de servicios tecnológicos y equipamiento de hardware.</p>
+        
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">ID Proveedor</th>
+                        <th scope="col">Razón Social</th>
+                        <th scope="col">Tipo de Suministro</th>
+                        <th scope="col">Representante</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PROV-001</td>
+                        <td class="fw-semibold">Global Tech Supplies Inc.</td>
+                        <td>Equipamiento Hardware (Servidores, Redes)</td>
+                        <td>Carlos Sánchez</td>
+                        <td><span class="badge bg-success rounded-pill">Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td>PROV-002</td>
+                        <td class="fw-semibold">Cloud AWS Solutions P.</td>
+                        <td>Servicios de Hosting & Cloud</td>
+                        <td>Ana Martínez</td>
+                        <td><span class="badge bg-success rounded-pill">Activo</span></td>
+                    </tr>
+                    <tr>
+                        <td>PROV-003</td>
+                        <td class="fw-semibold">CyberSec Licenses LTDA</td>
+                        <td>Licencias de Software y Seguridad</td>
+                        <td>Pedro Ruiz</td>
+                        <td><span class="badge bg-secondary rounded-pill">Inactivo</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Clientes - Cibercore{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient-neutral">
+    <div class="container">
+        <h2 class="display-6 fw-bold mb-4 text-success">Directorio de Clientes</h2>
+        <p class="lead text-muted mb-5">Consulte la información de las empresas e instituciones con las que trabajamos.</p>
+        
+        <div class="row g-4">
+            <!-- Cliente 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">C1</div>
+                            <h4 class="h5 fw-bold mb-0">Consultora Integral S.A.</h4>
+                        </div>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Contacto:</i> María Fernández</p>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Email:</i> contacto@consultoraintegral.com</p>
+                        <p class="text-muted small mb-0"><i class="fw-bold">Teléfono:</i> +593 98 765 4321</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Cliente 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">C2</div>
+                            <h4 class="h5 fw-bold mb-0">Tech Startups Ecuador</h4>
+                        </div>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Contacto:</i> Juan Pérez</p>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Email:</i> info@techstartups.ec</p>
+                        <p class="text-muted small mb-0"><i class="fw-bold">Teléfono:</i> +593 99 123 4567</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cliente 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px; font-size: 1.5rem;">C3</div>
+                            <h4 class="h5 fw-bold mb-0">Instituto Educativo del Sur</h4>
+                        </div>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Contacto:</i> Roberto Gómez</p>
+                        <p class="text-muted small mb-2"><i class="fw-bold">Email:</i> admin@institutosur.edu.ec</p>
+                        <p class="text-muted small mb-0"><i class="fw-bold">Teléfono:</i> +593 3 245 6789</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
