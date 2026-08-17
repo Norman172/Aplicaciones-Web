@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{% block title %}Aplicaciones Web{% endblock %}</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-dark glass-navbar sticky-top shadow-sm py-3">
+		<div class="container">
+			<a class="navbar-brand fw-bold fs-4 d-flex align-items-center" href="#inicio">
+				<span style="color: #DAE021;">Cibercore</span> 
+				<span class="fw-light fs-6 ms-2 d-none d-sm-inline-block text-white opacity-75 border-start border-secondary ps-2">Soluciones Digitales</span>
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul id="nav-lista" class="navbar-nav ms-auto"></ul>
+			</div>
+		</div>
+	</nav>
+
+	<main>
+		{% block content %}{% endblock %}
+	</main>
+
+	<!-- Modal de Bootstrap para Detalles del Servicio -->
+	<div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="modalServicioLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+				<div class="modal-header border-0 pb-0">
+					<div class="d-flex align-items-center gap-3">
+						<span id="modal-icono" class="fs-1"></span>
+						<h3 class="modal-title h5 text-primary fw-bold m-0" id="modalServicioLabel"></h3>
+					</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modal-descripcion" class="text-secondary mb-3"></p>
+					<p class="fw-bold text-dark mb-2 small">¿Qué incluye este servicio?</p>
+					<ul id="modal-lista" class="ps-3 mb-4 text-secondary small"></ul>
+				</div>
+				<div class="modal-footer border-0 pt-0">
+					<button type="button" class="btn btn-secondary rounded-2 px-4" data-bs-dismiss="modal">Cerrar</button>
+					<a href="#contacto" id="modal-btn-contactar" class="btn btn-primary fw-bold px-4 rounded-2" data-bs-dismiss="modal">Contáctanos</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="bg-dark text-white py-5 mt-5 border-top">
+		<div class="container">
+			<div id="footer-grid" class="row g-4 text-center text-md-start"></div>
+		</div>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
